@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+option java_package="com.lpc";
+option java_outer_classname="UserGRPC";
+
+import "com/lpc/public.proto";
+import public "google/protobuf/timestamp.proto";
+
+message UserMessage{
+  string id = 1;
+  string name = 2;
+  google.protobuf.Timestamp createTime = 3;
+  string status = 4;
+}
+
+message UserWithPassMsg{
+  UserMessage user=1;
+  string pass=2;
+}
+
+message LoginMessage{
+  string id = 1;
+  string pass = 2;
+}
+
+message UpdatePassMessage{
+  string id = 1;
+  string oldPass = 2;
+  string newPass = 3;
+}
+
+
+service UserService{
+  /**
+  检查用户名LoginID是否存在
+   */
+  rpc hasUser (Id) returns (ResultBool){}
+  /**
+  登录，用户名存储在LoginMessage中
+   */
+  rpc checkPass (LoginMessage) returns (ResultBool){}
+  /**
+  根据LoginId在数据库中查询对应的用户信息
+   */
+  rpc getUser (Id) returns (UserMessage){}
+  /**
+  注册，向数据库中添加一条用户信息
+   */
+  rpc register (UserWithPassMsg) returns (ResultBool){}
+  /**
+  修改密码，修改对应用户的密码
+   */
+  rpc updatePass (UpdatePassMessage) returns (ResultBool){}
+  /**
+  查询所有用户信息
+   */
+  rpc getAllUsers (VoidMessage) returns (stream UserMessage){}
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/web_server_war_exploded/css/style.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <div class="login">
+        <div id="login-logo">登录</div>
+        <div class="login-box" >
+
+            <form name="formLogin" action="/web_server_war_exploded/login/sign" method="post">
+                <p><label for="userName"><span class="glyphicon glyphicon-user"></span></label><input id="userName" type="text" name="userName" placeholder="请输入用户名"/></p>
+                <p><label for="password"><span class="glyphicon glyphicon-lock"></span></label><input id="password" type="password" name="password" placeholder="请输入密码"/> </p>
+                <input type="submit" value="登录"/>
+            </form>
+        </div>
+        <div id="login-other">
+            <a class="fl" href="">快速注册</a>
+            <a class="fr" href="">忘记密码</a>
+        </div>
+    </div>
+<!--    <div class="login box">-->
+<!--        <div class="_3CkMCIo8-RsWtcLQqsuKBh">-->
+<!--            <div class="_3lr3h2hawOi8pO8fYLQcjI">用户登录</div>-->
+<!--            <div class="_6vZdUKmPDGrrza0LnuXD9">-->
+<!--                <div class="mobileIcon"></div>-->
+<!--                <input type="text" maxlength="11" autocomplete="off" placeholder="请输入十一位手机号码">-->
+<!--                <p class="_2nSTvdgBwioyepYsyeaVPN"></p>-->
+<!--            </div>-->
+<!--            <div class="_6vZdUKmPDGrrza0LnuXD9">-->
+<!--                <div>-->
+<!--                    <div class="passwordIcon"></div>-->
+<!--                    <input type="password" autocomplete="off" placeholder="请输入6-20位密码">-->
+<!--                    <p class="_2nSTvdgBwioyepYsyeaVPN"></p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="_6vZdUKmPDGrrza0LnuXD9"><a class="_2ZggRBvDTyawWaQQ6ambu4">登录</a></div>-->
+<!--            <div class="_6vZdUKmPDGrrza0LnuXD9">-->
+<!--                <div>-->
+<!--                    <p class="_2owYBOfa1UIX-AfegSAhj7"><a href="">快速注册</a></p>-->
+<!--                    <a href="" class="_3x9qBnGOvjSE2ZmDfi1w5g">忘记密码</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+</body>
+</html>

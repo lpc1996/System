@@ -1,0 +1,97 @@
+<!--
+@package:
+@Author:旁观者
+@Date:2022/2/17-9:58
+@By:IntelliJ IDEA
+@FileName:roleManage.html
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/template::head('校园管理系统-角色管理')">
+    <title>Title</title>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <section class="content-wrapper">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">角色管理</span>
+                </div>
+                <div class="card-body">
+                        <table class="table table-bordered" id="user-table">
+
+                        </table>
+                        <div id="pager"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        $().ready(function (){
+            pageInit();
+        })
+
+        function pageInit() {
+            let userTable = $("#user-table");
+            $(userTable).jqGrid({
+                url:"/web_server/systemSetting/getRoles",
+                mtype:"post",
+                dataType:"json",
+                // responsive:true,
+                loadui:"block",
+                width:'100%',
+                // height:'auto',
+                rowNum: 10,
+                rowList: [10, 15, 25],//分页属性
+                multiselect: true,
+                styleUI: 'jQueryUI',
+                colNames:["Id","角色名称","角色描述"],
+                colModel:[
+                    {name:'id',index:'id', width:55},
+                    {name:'name',index:'name', width:90},
+                    {name:'info',index:'info', width:100}
+                ],
+                pager : '#pager',
+                page:$(userTable).getGridParam('page'),
+                rows:$(userTable).getGridParam('rows'),
+                sortname : 'id',
+                sortorder : "desc",
+                shrinkToFit:true,
+                autowidth:true,
+                jsonReader:{
+                    root : "formList", // json中代表实际模型数据的入口
+                    records : "records", // json中代表数据行总数的数据
+                    page : "page", // json中代表当前页码的数据
+                    total : "total", // json中代表页码总数的数据
+                    repeatitems : false
+                },
+                gridComplete:function(){
+                    let total = $(userTable).getGridParam("total");
+                    let rows = $(userTable).getGridParam("rows");
+                    let pageNum = total/rows;
+                    if(pageNum == 0){
+                        pageNum++;
+                    }
+                    // $(userTable).setGridParams("rows");
+                },
+                loadError:function(xhr,status,error){
+                    alert("请求数据"+xhr.readyState+" "+status+" "+error);
+                    console.log("请求数据"+xhr.readyState+" "+status+" "+error)
+                },
+                autoencode: true,
+                gridview: true,
+                viewrecords: true,//定义是否要显示总记录数
+                emptyrecords: "没有数据",
+                caption:"角色信息管理"
+            }).navGrid('#pager', {edit : false,add : false,del : false});
+            let cardBody = $("div.card-body")
+            $(userTable).jqGrid('setGridWidth',$(cardBody).width());
+            $(window).on('resize.jqGrid', function () {
+                let parentDom = $(userTable).parent();
+                $(userTable).jqGrid('setGridWidth',$(parentDom).width());
+            });
+
+        }
+    </script>
+</body>
+</html>

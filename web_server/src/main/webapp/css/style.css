@@ -1,0 +1,39 @@
+.box{
+    position: relative;
+    border-radius: 5px;
+}
+
+.login-box{
+    text-align: center;
+    background-color: #f2f2f2;
+    position: relative;
+    border-radius: 5px;
+}
+
+#randomImage{
+    margin-right: 20px;
+}
+
+.login-title{
+    margin: 20px 0 20px 0;
+}
+
+.randomImage-box{
+    margin-bottom: 20px;
+}
+
+.up-pass-box{
+    margin-top: 20px;
+    padding-top: 1rem;
+}
+
+.label-margin{
+    margin:0;
+}
+
+.font-icon{
+    padding-top:12px;
+}
+.error{
+    color:red;
+}

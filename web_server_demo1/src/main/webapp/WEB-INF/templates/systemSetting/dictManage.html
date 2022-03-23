@@ -1,0 +1,94 @@
+<!--
+@package:
+@Author:旁观者
+@Date:2022/2/21-10:39
+@By:IntelliJ IDEA
+@FileName:dictManage.html
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/template::head('校园管理系统-字典管理')">
+    <title>Title</title>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <header th:replace="/common/template::top-menu"></header>
+        <aside th:replace="/common/template::left-menu"></aside>
+        <section class="content-wrapper">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">字典管理</span>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered" id="user-table">
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <div id="pager"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        $().ready(function (){
+            pageInit();
+        })
+
+        function pageInit() {
+            let userTable = $("#user-table");
+            $("#user-table").jqGrid({
+                url:"/web_server/systemSetting/getDicts",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                mtype: "post",
+                rowNum: 10,
+                rowList: [10, 15, 25],//分页属性
+                multiselect: true,
+                cellEdit:true,
+                // styleUI: 'Bootstrap',
+                colNames:["Id","表名","列名","类型代码","类型名称","数据数值","数据名称","类型状态","最后更新时间"],
+                colModel:[
+                    {name:'id',index:'id', width:55},
+                    {name:'tableName',index:'tableName', width:90},
+                    {name:'columnName',index:'columnName', width:100},
+                    {name:'typeCode',index: 'typeCode',with :100},
+                    {name:'typeName',index:'typeName',width: 100},
+                    {name:'valueId',index:'valueId',width: 100},
+                    {name: 'valueName',index: 'valueName',width:100},
+                    {name: 'status',index: 'status',width: 50},
+                    {name: 'updateTime',index: 'updateTime',width: 100,
+                        formatter: formatTimestappmp
+                    }
+                ],
+                pager : '#pager',
+                page:1,
+                rows:$(userTable).getGridParam('rows'),
+                sortname : 'id',
+                sortorder : "desc",
+                shrinkToFit:true,
+                autowidth:true,
+                jsonReader:{
+                    root : "formList", // json中代表实际模型数据的入口
+                    records : "records", // json中代表数据行总数的数据
+                    page : "page", // json中代表当前页码的数据
+                    total : "total", // json中代表页码总数的数据
+                    repeatitems : false
+                },
+                gridComplete:function(data){
+                    console.log(data);
+                },
+                loadError:function(xhr,status,error){
+                    alert("请求数据"+xhr.readyState+" "+status+" "+error);
+                },
+                autoencode: true,
+                gridview: true,
+                viewrecords: true,//定义是否要显示总记录数
+                emptyrecords: "没有数据",
+                caption:"字典管理"
+            });
+            // $("div#pager").jqGrid('navGrid', '#pager', {edit : false,add : false,del : false});
+        }
+    </script>
+</body>
+</html>

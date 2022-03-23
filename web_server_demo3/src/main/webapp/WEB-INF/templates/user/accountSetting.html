@@ -1,0 +1,29 @@
+<!--
+@package:
+@Author:旁观者
+@Date:2022/2/14-22:07
+@By:IntelliJ IDEA
+@FileName:accountSetting.html
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/template::head('校园管理系统-账户设置')">
+    <title>Title</title>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <header class="main-header navbar navbar-expand-md navbar-light navbar-white ml-0" th:include="/common/template::top-menu"></header>
+
+    <div class="row w-100 ml-0">
+        <ul class="list-group w-100">
+            <li class="list-group-item">
+                <span>密码</span>
+                <a th:href="@{/user/updatePass}" class="btn-link ml-5 float-right">
+                    <span class="ml-2">修改密码</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

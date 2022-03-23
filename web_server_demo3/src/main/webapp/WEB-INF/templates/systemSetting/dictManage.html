@@ -1,0 +1,126 @@
+<!--
+@package:
+@Author:旁观者
+@Date:2022/2/21-10:39
+@By:IntelliJ IDEA
+@FileName:dictManage.html
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/template::head('校园管理系统-字典管理')">
+    <title>Title</title>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <section class="content-wrapper">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">字典管理</span>
+                </div>
+                <div class="card-body">
+                    <div class="btn-group mb-3">
+                        <button id="new-dict" class="btn btn-primary" onclick="insertRow($('table#dict-table'))">新增</button>
+                    </div>
+                    <table class="table table-bordered" id="dict-table">
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <div id="pager"></div>
+                    <div id="consoleDlg" style="display: none">
+                        <form id="consoleForm" class="form-horizontal">
+                            <input type="hidden" id="selectId"/>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <label for="type-code">类型代码</label>
+                                    <input id="type-code" nam="typeCode" class="form-control" >
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        $().ready(function (){
+            pageInit();
+        })
+
+        function pageInit() {
+            let dictTable = $("#dict-table");
+            $("#dict-table").jqGrid({
+                url:"/web_server/systemSetting/getDicts",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                mtype: "post",
+                rowNum: 10,
+                rowList: [10, 15, 25],//分页属性
+                multiselect: true,
+                cellEdit:true,
+                editurl: '/web_server/systemSetting/updateDicts',
+                // styleUI: 'Bootstrap',
+                colNames:["Id","表名","列名","类型代码","类型名称","数据数值","数据名称","类型状态","最后更新时间"],
+                colModel:[
+                    {name:'id',index:'id', width:55,editabel:false},
+                    {name:'tableName',index:'tableName', width:90},
+                    {name:'columnName',index:'columnName', width:80},
+                    {name:'typeCode',index: 'typeCode',with :80},
+                    {name:'typeName',index:'typeName',width: 80},
+                    {name:'valueId',index:'valueId',width: 80},
+                    {name: 'valueName',index: 'valueName',width:100},
+                    {name: 'status',index: 'status',width: 50},
+                    {name: 'updateTime',index: 'updateTime',width: 100,
+                        formatter: formatTimestappmp
+                    }
+                ],
+                pager : '#pager',
+                page:$(dictTable).getGridParam("page"),
+                rows:$(dictTable).getGridParam('rows'),
+                sortname : 'id',
+                sortorder : "desc",
+                shrinkToFit:true,
+                autowidth:true,
+                jsonReader:{
+                    root : "formList", // json中代表实际模型数据的入口
+                    records : "records", // json中代表数据行总数的数据
+                    page : "page", // json中代表当前页码的数据
+                    total : "total", // json中代表页码总数的数据
+                    repeatitems : false
+                },
+                gridComplete:function(data){
+                    console.log(data);
+                },
+                loadError:function(xhr,status,error){
+                    alert("请求数据"+xhr.readyState+" "+status+" "+error);
+                },
+                autoencode: true,
+                gridview: true,
+                viewrecords: true,//定义是否要显示总记录数
+                emptyrecords: "没有数据",
+                caption:"字典管理"
+            }).navGrid('#pager', {
+                edit : true,add : true,del : true,
+                addfunc:openDialog4Adding
+            });
+        }
+
+        function openDialog4Adding(){
+            let consoleDlg = $("#consoleDlg");
+            consoleDlg.find("input").removeAttr("disabled").val("");
+            consoleDlg.dialog({
+                title:"新增",
+                resizable:false,
+                width:480,
+                buttons:{
+                    "取消":function(){
+                        $("#consoleDlg").dialog("close");
+                    },
+                    "新增":addItem
+                }
+            });
+            consoleDlg.dialog("open");
+        };
+    </script>
+</body>
+</html>

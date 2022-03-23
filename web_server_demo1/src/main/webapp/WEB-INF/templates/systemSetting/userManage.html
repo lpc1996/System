@@ -1,0 +1,96 @@
+<!--
+@package:
+@Author:旁观者
+@Date:2022/2/16-16:02
+@By:IntelliJ IDEA
+@FileName:userManage.html
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/template::head('校园管理系统-用户管理')">
+    <title>Title</title>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <header th:replace="/common/template::top-menu"></header>
+        <aside th:replace="/common/template::left-menu"></aside>
+        <section class="content-wrapper">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">用户管理</span>
+                </div>
+                <div class="card-body">
+                    <table id="user-table"></table>
+                    <div id="pager"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        $().ready(function (){
+            pageInit();
+        })
+
+        function pageInit(){
+            let userTable = $("#user-table");
+            $(userTable).jqGrid({
+                url:"/web_server/systemSetting/getUsers",
+                mtype:"post",
+                dataType:"json",
+                loadui:"block",
+                width:'100%',
+                rowNum: 10,
+                rowList: [10, 15, 25],//分页属性
+                multiselect: true,
+                styleUI: 'jQueryUI',
+                colNames:["用户名","用户昵称","头像","创建时间","账户状态"],
+                colModel:[
+                    {name:'id',index:'id', width:55},
+                    {name:'name',index:'name', width:90},
+                    {name:'imgUrl',index:'imgUrl', width:100},
+                    {name:'createTime',index:'createTime',width: 100,
+                        formatter: formatTimestappmp
+                    },
+                    {name:'status',index: 'status',width:50}
+                ],
+                pager : '#pager',
+                page:$(userTable).getGridParam('page'),
+                rows:$(userTable).getGridParam('rows'),
+                sortname : 'id',
+                sortorder : "desc",
+                shrinkToFit:true,
+                autowidth:true,
+                jsonReader:{
+                    root : "formList", // json中代表实际模型数据的入口
+                    records : "records", // json中代表数据行总数的数据
+                    page : "page", // json中代表当前页码的数据
+                    total : "total", // json中代表页码总数的数据
+                    repeatitems : false
+                },
+                gridComplete:function(){
+                    let total = $(userTable).getGridParam("total");
+                    let rows = $(userTable).getGridParam("rows");
+                    let pageNum = total/rows;
+                    if(pageNum == 0){
+                        pageNum++;
+                    }
+                    // $(userTable).setGridParams("rows");
+                },
+                loadError:function(xhr,status,error){
+                    alert("请求数据"+xhr.readyState+" "+status+" "+error);
+                    console.log("请求数据"+xhr.readyState+" "+status+" "+error)
+                },
+                autoencode: true,
+                gridview: true,
+                viewrecords: true,//定义是否要显示总记录数
+                emptyrecords: "没有数据",
+                caption:"账户信息管理"
+            }).navGrid('#pager', {edit : false,add : false,del : false});
+            $(window).on('resize.jqGrid', function () {
+                let parentDom = $(userTable).parent();
+                $(userTable).jqGrid('setGridWidth',$(parentDom).width());
+            });
+        };
+    </script>
+</body>
+</html>
