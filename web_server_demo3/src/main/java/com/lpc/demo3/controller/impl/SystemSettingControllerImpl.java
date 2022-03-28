@@ -1,7 +1,6 @@
 package com.lpc.demo3.controller.impl;
 
 import com.lpc.demo3.controller.SystemSettingController;
-import com.lpc.demo3.model.Dict;
 import com.lpc.demo3.pojo.JqGridListForm;
 import com.lpc.demo3.pojo.Pagination;
 import com.lpc.demo3.service.impl.DictServiceImpl;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @package:com.lpc.demo1.controller.impl
@@ -52,7 +53,7 @@ public class SystemSettingControllerImpl extends BaseController implements Syste
 
 
     @Override
-    @RequestMapping(value = "roleManage",method = RequestMethod.GET)
+    @RequestMapping(value = "/roleManage",method = RequestMethod.GET)
     public ModelAndView roleManage(ModelAndView view, Model model) {
 //        List<Role> roles = roleService.findByPage(page,pageSize);
 //        model.addAttribute("roles",roles);
@@ -60,7 +61,7 @@ public class SystemSettingControllerImpl extends BaseController implements Syste
         return view;
     }
 
-    @RequestMapping(value = "getRoles",method = RequestMethod.POST,headers = "Accept=application/json;charset=utf-8")
+    @RequestMapping(value = "/getRoles",method = RequestMethod.POST,headers = "Accept=application/json;charset=utf-8")
     @ResponseBody
     public JqGridListForm getRoles(Pagination pagination){
         JqGridListForm jqGridListForm = roleService.findByPage(pagination);
@@ -68,27 +69,48 @@ public class SystemSettingControllerImpl extends BaseController implements Syste
     }
 
     @Override
-    @RequestMapping(value = "dictManage",method = RequestMethod.GET)
+    @RequestMapping(value = "/dictManage",method = RequestMethod.GET)
     public ModelAndView dictManage(ModelAndView view, Model model) {
         view.setViewName("systemSetting/dictManage");
         return view;
     }
 
-    @RequestMapping(value = "getDicts",method = RequestMethod.POST)
+    @RequestMapping(value = "/getDicts",method = RequestMethod.POST)
     @ResponseBody
     public JqGridListForm getDicts(Pagination pagination) {
         JqGridListForm jqGridListForm = dictService.findByPage(pagination);
         return jqGridListForm;
     }
 
-    @RequestMapping(value="updateDicts",method = RequestMethod.POST)
+    @RequestMapping(value = "/editDict",method = RequestMethod.POST)
     @ResponseBody
-    public JqGridListForm updateDicts(Dict dict){
-        if(dictService.addDict(dict)){
+    public JqGridListForm editDict(HttpServletRequest request,HttpServletResponse response){
 
-        }
-        return null;
+        Pagination pagination = new Pagination();
+        pagination.setPage(1);
+        pagination.setRecords(1);
+        pagination.setRows(1);
+        pagination.setSidx("id");
+        pagination.setSord("desc");
+        JqGridListForm jqGridListForm = dictService.findByPage(pagination);
+        return jqGridListForm;
     }
 
-
+//    @RequestMapping(value="updateDicts",method = RequestMethod.POST)
+//    @ResponseBody
+//    public JqGridListForm updateDicts(Dict dict){
+//
+//        return null;
+//    }
+//
+//    @RequestMapping(value="addDict",method = RequestMethod.POST)
+//    @ResponseBody
+//    public JqGridListForm addDict(Dict dict){
+//        if(dictService.addDict(dict)){
+//
+//        }
+//        return null;
+//    }
+//
+//    public JqGridListForm delDict()
 }

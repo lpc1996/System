@@ -58,8 +58,20 @@
                 rowList: [10, 15, 25],//分页属性
                 multiselect: true,
                 cellEdit:true,
-                editurl: '/web_server/systemSetting/updateDicts',
+                editurl: '/web_server/systemSetting/editDict',
                 // styleUI: 'Bootstrap',
+                pager : '#pager',
+                page:$(dictTable).getGridParam("page"),
+                rows:$(dictTable).getGridParam('rows'),
+                sortname : 'id',
+                sortorder : "desc",
+                shrinkToFit:true,
+                autowidth:true,
+                autoencode: true,
+                gridview: true,
+                viewrecords: true,//定义是否要显示总记录数
+                emptyrecords: "没有数据",
+                caption:"字典管理",
                 colNames:["Id","表名","列名","类型代码","类型名称","数据数值","数据名称","类型状态","最后更新时间"],
                 colModel:[
                     {name:'id',index:'id', width:55,editabel:false},
@@ -74,13 +86,6 @@
                         formatter: formatTimestappmp
                     }
                 ],
-                pager : '#pager',
-                page:$(dictTable).getGridParam("page"),
-                rows:$(dictTable).getGridParam('rows'),
-                sortname : 'id',
-                sortorder : "desc",
-                shrinkToFit:true,
-                autowidth:true,
                 jsonReader:{
                     root : "formList", // json中代表实际模型数据的入口
                     records : "records", // json中代表数据行总数的数据
@@ -88,21 +93,30 @@
                     total : "total", // json中代表页码总数的数据
                     repeatitems : false
                 },
-                gridComplete:function(data){
-                    console.log(data);
+                gridComplete:function(){
+                    // console.log(data);
                 },
                 loadError:function(xhr,status,error){
                     alert("请求数据"+xhr.readyState+" "+status+" "+error);
-                },
-                autoencode: true,
-                gridview: true,
-                viewrecords: true,//定义是否要显示总记录数
-                emptyrecords: "没有数据",
-                caption:"字典管理"
+                }
             }).navGrid('#pager', {
-                edit : true,add : true,del : true,
-                addfunc:openDialog4Adding
+                edit : true,add : true ,del : true,
+                addfunc:addDict("dict-table")
             });
+        }
+
+        function addDict(gridID){
+            var ids = jQuery("#"+gridID).jqGrid('getDataIDs');
+            alert(ids)
+            if (ids.length == 0) {
+                ids = [0];
+            }
+            //获得当前最大行号（数据编号）
+            var rowid = Math.max.apply(Math, ids);
+            //获得新添加行的行号（数据编号）
+            var newrowid = rowid + 1;
+            var dataRow = {};
+            $("#"+gridID).jqGrid("addRowData", newrowid, dataRow, "last");
         }
 
         function openDialog4Adding(){
