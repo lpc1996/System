@@ -23,6 +23,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <mysql.version>8.0.28</mysql.version>
         <mybatis.version>3.5.7</mybatis.version>
+        <mapper.version>4.2.1</mapper.version>
         <druid.version>1.2.8</druid.version>
         <mybatis-spring.version>2.0.6</mybatis-spring.version>
         <spring.version>5.3.16</spring.version>
@@ -68,6 +69,13 @@
             <artifactId>mybatis</artifactId>
             <version>${mybatis.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/tk.mybatis/mapper -->
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper</artifactId>
+            <version>${mapper.version}</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
@@ -90,6 +98,11 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
         </dependency>
         <dependency>

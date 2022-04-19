@@ -15,7 +15,6 @@
         <module>base-client</module>
         <module>grpc_api</module>
         <module>web_server</module>
-        <module>web_server_demo1</module>
         <module>web_server_demo3</module>
     </modules>
 

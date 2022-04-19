@@ -1,5 +1,5 @@
 $().ready(function (){
-
+    // $("button.refresh-btn").on("click",f)
 })
 
 //刷新验证码
@@ -19,5 +19,37 @@ function formatTimestappmp(cellvalue, options, rowObject) {
     var m = date.getMinutes() + ':';
     var s = date.getSeconds();
     return Y + M + D + h + m + s;
+}
+
+function get_unix_time(dateStr){
+    var newstr = dateStr.replace(/-/g,'/');
+    var date =   new Date(newstr);
+    var time_str = date.getTime().toString();
+    return time_str.substr(0, 10);
+}
+
+function getFormData(form) {
+    var d = {};
+    var t = $(form).serializeArray();
+    $.each(t, function() {
+        d[this.name] = this.value;
+    });
+    return d;
+}
+
+function hasSelect(table){
+    let selectRow = $(table).jqGrid("getGridParam","selrow");
+    return selectRow == null ? true : false;
+}
+
+/**
+ * 清空表单数据
+ * @param formId 表单ID
+ */
+function clearForm(formId){
+    let inputArray = $("form#"+formId+" input");
+    $.each(inputArray, function (index){
+        $(inputArray[index]).attr("value",null);
+    });
 }
 

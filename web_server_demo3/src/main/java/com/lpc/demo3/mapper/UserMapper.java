@@ -3,19 +3,12 @@ package com.lpc.demo3.mapper;
 import com.lpc.demo3.model.User;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
 
 /**
  * @author 濃霧-遠方
  * @date 2021/11/8
  */
-public interface UserMapper {
-    /**
-     * delete by primary key
-     * @param id primaryKey
-     * @return deleteCount
-     */
-    int deleteByPrimaryKey(String id);
+public interface UserMapper extends MyMapper {
 
     /**
      * insert record to table
@@ -30,21 +23,6 @@ public interface UserMapper {
      * @return insert count
      */
     int insertSelective(@Param("record") User record,@Param("pass") String pass);
-
-    /**
-     * select by primary key
-     * @param id primary key
-     * @return object by primary key
-     */
-    User selectByPrimaryKey(String id);
-
-    /**
-     * 查询数据库的所有数据
-     * @return
-     */
-    List<User> selectAll();
-
-    int selectCount();
 
     /**
      * 检查用户名 id 是否存在
@@ -69,14 +47,20 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(@Param("record") User record,@Param("pass") String pass);
 
     /**
-     * update record
-     * @param record the updated record
-     * @return update count
+     * 修改密码
+     * @param id 用户Id
+     * @param oldPass 旧密码
+     * @param newPass 新密码
+     * @return 返回受影响的行数
      */
-    int updateByPrimaryKey(@Param("record") User record);
-
     int updatePassByIdAndOldPass(@Param("id") String id,@Param("oldPass") String oldPass,@Param("newPass") String newPass);
 
+    /**
+     * 更新用户昵称
+     * @param updatedName 新的昵称
+     * @param id 用户ID
+     * @return 返回受影响的行数
+     */
     int updateNameById(@Param("updatedName")String updatedName,@Param("id")String id);
 
 }

@@ -34,7 +34,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/user")
 @SessionAttributes(names = {"user","archive","menus"})
-public class UserControllerImpl extends BaseController implements UserController {
+public class UserControllerImpl implements UserController {
 
     @Resource
     private UserServiceImpl userService;

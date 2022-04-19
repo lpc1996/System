@@ -1,8 +1,9 @@
 package com.lpc.demo3.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.lpc.demo3.mapper.DictMapper;
-import com.lpc.demo3.model.Dict;
+import com.lpc.demo3.mapper.SysDictMapper;
+import com.lpc.demo3.mapper.tkMapper.SysDictMapperTk;
+import com.lpc.demo3.model.SysDict;
 import com.lpc.demo3.pojo.JqGridListForm;
 import com.lpc.demo3.pojo.Pagination;
 import com.lpc.demo3.service.DictService;
@@ -24,12 +25,14 @@ import java.util.List;
 public class DictServiceImpl extends MyService implements DictService {
 
     @Resource
-    private DictMapper dictMapper;
+    private SysDictMapper sysDictMapper;
+    @Resource
+    private SysDictMapperTk sysDictMapperTk;
 
-    public  Integer getCount(Dict record) {
+    public  Integer getCount(SysDict record) {
         Integer count = 0;
         if(record == null){
-            count = dictMapper.selectCount();
+            count = sysDictMapperTk.selectCount(record);
         }
         return count;
     }
@@ -39,12 +42,18 @@ public class DictServiceImpl extends MyService implements DictService {
         int pageId = pagination.getPage() <= 0? 1:pagination.getPage();
         int pageSize = pagination.getRows() <= 0? 20: pagination.getRows();
         PageHelper.startPage(pageId,pageSize);
-        List<Dict> dictList = dictMapper.selectAll();
+        List<SysDict> dictList = sysDictMapperTk.selectAll();
         return createJqGridListForm(dictList,getCount(null),pageId,pageSize);
     }
 
     @Override
-    public boolean addDict(Dict record) {
-        return dictMapper.insert(record) == 1? true: false;
+    public boolean addDict(SysDict record) {
+        return sysDictMapperTk.insert(record) == 1? true: false;
     }
+
+    public boolean updateDict(SysDict record){
+        return sysDictMapperTk.updateByPrimaryKey(record) == 1? true: false;
+    }
+
+//    public
 }

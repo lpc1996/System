@@ -2,6 +2,7 @@ package com.lpc.demo3.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.lpc.demo3.mapper.RoleMapper;
+import com.lpc.demo3.mapper.tkMapper.RoleMapperTk;
 import com.lpc.demo3.model.Role;
 import com.lpc.demo3.pojo.JqGridListForm;
 import com.lpc.demo3.pojo.Pagination;
@@ -25,11 +26,13 @@ public class RoleServiceImpl extends MyService implements RoleService {
 
     @Resource
     private RoleMapper roleMapper;
+    @Resource
+    private RoleMapperTk roleMapperTk;
 
     public Integer getCount(Role record) {
         Integer count = 0;
         if(record == null){
-            count = roleMapper.selectCount();
+            count = roleMapperTk.selectCount(record);
         }
         return count;
     }
@@ -39,7 +42,7 @@ public class RoleServiceImpl extends MyService implements RoleService {
         int pageId = pagination.getPage() <= 0? 1:pagination.getPage();
         int pageSize = pagination.getRows() <= 0? 20: pagination.getRows();
         PageHelper.startPage(pageId,pageSize);
-        List<Role> roleList = roleMapper.selectAll();
+        List<Role> roleList = roleMapperTk.selectAll();
         return createJqGridListForm(roleList,getCount(null),pageId,pageSize);
     }
 }

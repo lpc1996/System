@@ -81,7 +81,7 @@ public class RandomCodeUtil {
     //随机字符
     private static char randomChar() {
         //A-Z,a-z,0-9,可剔除一些难辨认的字母与数字
-        String str = "123456789ABCdefghDEFGHIJopPQRVWXYZabcjkSTUmnqrstKLMNOvuwxyz";
+        String str = "23456789ABCdefghDEFGHJpPQRVWXYZabcjkSTUmnqrstKMNvuwxyz";
         return str.charAt(random.nextInt(str.length()));
     }
 

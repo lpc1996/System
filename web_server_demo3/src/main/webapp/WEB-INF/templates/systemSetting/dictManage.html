@@ -19,7 +19,14 @@
                 </div>
                 <div class="card-body">
                     <div class="btn-group mb-3">
-                        <button id="new-dict" class="btn btn-primary" onclick="insertRow($('table#dict-table'))">新增</button>
+                        <input class="mr-3 rounded" type="text" name="search" />
+                        <input class="btn btn-primary" type="button" value="查询" />
+                        <button id="new-dict" class="btn btn-primary" data-toggle="modal"
+                                data-target="#add-dict-modal"
+                                onclick="$('input#dict-updateTime').val(getNowTime());$('form#dict-form #submit-dict').attr('value','insert');">新增</button>
+                        <button id="edit-dict" class="btn btn-primary" onclick="$('form#dict-form #submit-dict').attr('value','edit');initDictForm($('#add-dict-modal'));">编辑</button>
+                        <button id="def-dict" class="btn btn-primary">删除</button>
+                        <button class="btn btn-primary refresh-btn" onclick="$('form#dict-form').trigger('reloadGrid');">刷新</button>
                     </div>
                     <table class="table table-bordered" id="dict-table">
                         <tr>
@@ -27,17 +34,60 @@
                         </tr>
                     </table>
                     <div id="pager"></div>
-                    <div id="consoleDlg" style="display: none">
-                        <form id="consoleForm" class="form-horizontal">
-                            <input type="hidden" id="selectId"/>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <label for="type-code">类型代码</label>
-                                    <input id="type-code" nam="typeCode" class="form-control" >
-                                </div>
+                </div>
+                <div class="modal fade" id="add-dict-modal" tabindex="-1" role="dialog" aria-labelledby="add-dict-modal-label" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="add-dict-modal-label">添加字典</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
-                        </form>
-                    </div>
+                            <form id="dict-form" class="form-horizontal" th:action="@{/systemSetting/editDict}" method="post">
+                                <div class="modal-body">
+                                    <div class="form-group d-none">
+                                        <div class="input-group">
+                                            <label for="dict-id" class="mr-3">字典编号：</label>
+                                            <input id="dict-id" name="id" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label for="dict-name" class="mr-3">字典名称：</label>
+                                            <input id="dict-name" name="name" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label for="dict-type" class="mr-3">字典类型：</label>
+                                            <input id="dict-type" name="type" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label for="dict-code" class="mr-3">字典码：</label>
+                                            <input id="dict-code" name="code" type="number" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label for="dict-value" class="mr-3">字典值：</label>
+                                            <input id="dict-value" name="value" type="text" class="form-control" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label for="dict-status" class="mr-3">字典状态：</label>
+                                            <input id="dict-status" name="status" type="number" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearForm('dict-form')">关闭</button>
+                                    <button id="submit-dict" type="button" class="btn btn-primary" value="" onclick="editDict('dict-form',$(this).attr('value'))" th:text="提交"/>
+                                </div>
+                            </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
                 </div>
             </div>
         </section>
@@ -69,21 +119,34 @@
                 autowidth:true,
                 autoencode: true,
                 gridview: true,
-                viewrecords: true,//定义是否要显示总记录数
                 emptyrecords: "没有数据",
+                viewrecords: true,//定义是否要显示总记录数
                 caption:"字典管理",
-                colNames:["Id","表名","列名","类型代码","类型名称","数据数值","数据名称","类型状态","最后更新时间"],
+                colNames:["Id","字典名称","字典类型","字典码","字典值","字典状态","最后更新时间"],
                 colModel:[
-                    {name:'id',index:'id', width:55,editabel:false},
-                    {name:'tableName',index:'tableName', width:90},
-                    {name:'columnName',index:'columnName', width:80},
-                    {name:'typeCode',index: 'typeCode',with :80},
-                    {name:'typeName',index:'typeName',width: 80},
-                    {name:'valueId',index:'valueId',width: 80},
-                    {name: 'valueName',index: 'valueName',width:100},
-                    {name: 'status',index: 'status',width: 50},
-                    {name: 'updateTime',index: 'updateTime',width: 100,
-                        formatter: formatTimestappmp
+                    {name:'id',index:'id', width:55,editable:false},
+                    {name:'name',index: 'name',with :80},
+                    {name:'type',index:'type',width: 80},
+                    {name:'code',index:'id',width: 80},
+                    {name: 'value',index: 'value',width:100},
+                    {name: 'status',index: 'id',width: 50},
+                    {name: 'updateTime',index: 'updateTime',width: 100,editable:false,
+                        formatter: formatTimestappmp,
+                        editoptions:{
+                            dataInit:function (e){
+                                $(e).datepicker({
+                                    autoclose:true,
+                                    format:'yyyy-mm-dd',
+                                    minView:2,
+                                    language:'zh-CN',
+                                    todayBtn:true
+                                });
+
+                                $(this).click(function(e){
+                                    $(e).parent().datepicker('hide');
+                                });
+                            }
+                        }
                     }
                 ],
                 jsonReader:{
@@ -94,47 +157,23 @@
                     repeatitems : false
                 },
                 gridComplete:function(){
-                    // console.log(data);
+                    if ($("table#dict-table").jqGrid("getGridParam","records") == 0){
+
+                    }
+                },
+                loadComplete: function(xhr){
+
                 },
                 loadError:function(xhr,status,error){
-                    alert("请求数据"+xhr.readyState+" "+status+" "+error);
+                    // alert("请求数据"+xhr.readyState+" "+status+" "+error);
                 }
             }).navGrid('#pager', {
-                edit : true,add : true ,del : true,
-                addfunc:addDict("dict-table")
+                edit : false,add : false ,del : false,search:false,ref:false
             });
         }
 
-        function addDict(gridID){
-            var ids = jQuery("#"+gridID).jqGrid('getDataIDs');
-            alert(ids)
-            if (ids.length == 0) {
-                ids = [0];
-            }
-            //获得当前最大行号（数据编号）
-            var rowid = Math.max.apply(Math, ids);
-            //获得新添加行的行号（数据编号）
-            var newrowid = rowid + 1;
-            var dataRow = {};
-            $("#"+gridID).jqGrid("addRowData", newrowid, dataRow, "last");
-        }
-
-        function openDialog4Adding(){
-            let consoleDlg = $("#consoleDlg");
-            consoleDlg.find("input").removeAttr("disabled").val("");
-            consoleDlg.dialog({
-                title:"新增",
-                resizable:false,
-                width:480,
-                buttons:{
-                    "取消":function(){
-                        $("#consoleDlg").dialog("close");
-                    },
-                    "新增":addItem
-                }
-            });
-            consoleDlg.dialog("open");
-        };
     </script>
+
+    <script th:src="@{/static/js/validate/dict_validate.js}"></script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.lpc.demo3.service;
 
 import com.lpc.demo3.model.Dict;
+import com.lpc.demo3.model.SysDict;
 
 /**
  * @package:com.lpc.demo1.service
@@ -11,5 +12,5 @@ import com.lpc.demo3.model.Dict;
  */
 public interface DictService extends Service {
 
-    public boolean addDict(Dict record);
+    boolean addDict(SysDict record);
 }

@@ -3,21 +3,26 @@ package com.lpc.demo3.model;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
  * @author 濃霧-遠方
- * @date 2021/11/8
+ * @date 20
+ * @21/11/8
  */
 
-/**
-    * user
-    */
 @Data
+@Table(name = "user")
 public class User{
     /**
     * 用户名
     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     /**
@@ -38,7 +43,7 @@ public class User{
     /**
     * 创建时间
     */
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date createTime;
 
     /**

@@ -23,7 +23,7 @@
      -->
     <mvc:default-servlet-handler/>
 
-    <context:component-scan base-package="com.lpc.demo3.controller" />
+    <context:component-scan base-package="com.lpc.demo3" />
 
     <mvc:resources mapping="/static/**" location="/static/" />
 
@@ -92,10 +92,18 @@
         <property name="defaultContentType" value="application/json;charset=UTF-8" />
     </bean>
 
-    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
+    <bean id="conversionDateService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.lpc.demo3.util.DateConverter" />
+            </set>
+        </property>
+    </bean>
+
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager"
+    conversion-service="conversionDateService">
         <mvc:message-converters>
             <ref bean="stringHttpMessageConverter" />
-<!--            <ref bean="jsonMessageConverters" />-->
             <ref bean="fastJsonHttpMessageConverter" />
         </mvc:message-converters>
     </mvc:annotation-driven>

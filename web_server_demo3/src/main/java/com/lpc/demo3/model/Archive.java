@@ -2,6 +2,10 @@ package com.lpc.demo3.model;
 
 import lombok.Data;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
   @package:com.lpc.model
   @Author:旁观者
@@ -17,7 +21,8 @@ public class Archive {
     /**
      * 学/工号
      */
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     /**

@@ -1,91 +1,49 @@
 package com.lpc.demo3.mapper.impl;
 
-import com.lpc.demo3.mapper.Mapper;
 import com.lpc.demo3.mapper.UserMapper;
 import com.lpc.demo3.model.User;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.mybatis.spring.support.SqlSessionDaoSupport;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * @author 濃霧-遠方
  * @date 2021/11/11
  */
 @Repository
-public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper, Mapper {
+public class UserMapperImpl extends MyMapperImpl<UserMapper> implements UserMapper {
 
-    @Autowired(required = false)
-    @Qualifier("sqlSessionTemplate")
-    public void setSqlSessionTemplate(SqlSessionTemplate sessionTemplate){
-        super.setSqlSessionTemplate(sessionTemplate);
-    }
-
-    @Override
-    public UserMapper getMapper() {
-        return getSqlSession().getMapper(UserMapper.class);
-    }
-
-    @Override
-    public int deleteByPrimaryKey(String id) {
-        return getMapper().deleteByPrimaryKey(id);
-    }
 
     @Override
     public int insert(User record,String pass) {
-        return getMapper().insert(record,pass);
+        return getMapper(UserMapper.class).insert(record,pass);
     }
 
     @Override
     public int insertSelective(User record,String pass) {
-        return getMapper().insertSelective(record,pass);
-    }
-
-    @Override
-    public User selectByPrimaryKey(String id) {
-        return getMapper().selectByPrimaryKey(id);
-    }
-
-    @Override
-    public List<User> selectAll() {
-        return getMapper().selectAll();
-    }
-
-    @Override
-    public int selectCount() {
-        return getMapper().selectCount();
+        return getMapper(UserMapper.class).insertSelective(record,pass);
     }
 
     @Override
     public int ifNullByPrimaryKey(String id) {
-        return getMapper().ifNullByPrimaryKey(id);
+        return getMapper(UserMapper.class).ifNullByPrimaryKey(id);
     }
 
     @Override
     public int ifNullByPrimaryKeyAndPass(String id, String pass) {
-        return getMapper().ifNullByPrimaryKeyAndPass(id,pass);
+        return getMapper(UserMapper.class).ifNullByPrimaryKeyAndPass(id,pass);
     }
 
     @Override
     public int updateByPrimaryKeySelective(User record,String pass) {
-        return getMapper().updateByPrimaryKeySelective(record,pass);
-    }
-
-    @Override
-    public int updateByPrimaryKey(User record) {
-        return getMapper().updateByPrimaryKey(record);
+        return getMapper(UserMapper.class).updateByPrimaryKeySelective(record,pass);
     }
 
     @Override
     public int updatePassByIdAndOldPass(String id, String oldPass, String newPass) {
-        return getMapper().updatePassByIdAndOldPass(id,oldPass,newPass);
+        return getMapper(UserMapper.class).updatePassByIdAndOldPass(id,oldPass,newPass);
     }
 
     @Override
     public int updateNameById(String updatedName, String id) {
-        return getMapper().updateNameById(updatedName,id);
+        return getMapper(UserMapper.class).updateNameById(updatedName,id);
     }
 }

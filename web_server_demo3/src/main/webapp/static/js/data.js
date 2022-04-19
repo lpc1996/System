@@ -5,3 +5,9 @@ function insertRow(table){
 
 }
 
+function getNowTime(){
+    let time = new Date();
+    let today = time.getFullYear()+'-'+(time.getMonth() + 1) +'-'+time.getDate()+' '
+        + time.getHours()+':' +time.getMinutes()+':'+time.getSeconds();
+    return today;
+}

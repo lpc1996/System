@@ -2,6 +2,7 @@ package com.lpc.demo3.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.lpc.demo3.mapper.MenuMapper;
+import com.lpc.demo3.mapper.tkMapper.MenuMapperTk;
 import com.lpc.demo3.model.Menu;
 import com.lpc.demo3.pojo.JqGridListForm;
 import com.lpc.demo3.pojo.Pagination;
@@ -22,16 +23,18 @@ import java.util.List;
 public class MenuServiceImpl extends MyService implements MenuService{
 
     @Resource
-    MenuMapper menuMapper;
+    private MenuMapper menuMapper;
+    @Resource
+    private MenuMapperTk menuMapperTk;
 
     @Override
     public JqGridListForm findByPage(Pagination pagination) {
         int pageId = pagination.getPage() <= 0? 1:pagination.getPage();
         int pageSize = pagination.getRows() <= 0? 20: pagination.getRows();
         PageHelper.startPage(pageId,pageSize);
-        List menuList = menuMapper.selectAll();
+        List menuList = menuMapperTk.selectAll();
         JqGridListForm jqGridListForm = createJqGridListForm(menuList,
-                menuMapper.selectCount(),pageId,pageSize);
+                menuMapperTk.selectCount(null),pageId,pageSize);
         return jqGridListForm;
     }
 

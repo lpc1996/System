@@ -1,6 +1,8 @@
 package com.lpc.demo3.controller.impl;
 
 import com.lpc.demo3.controller.SystemSettingController;
+import com.lpc.demo3.model.SysDict;
+import com.lpc.demo3.pojo.JqGridEditForm;
 import com.lpc.demo3.pojo.JqGridListForm;
 import com.lpc.demo3.pojo.Pagination;
 import com.lpc.demo3.service.impl.DictServiceImpl;
@@ -10,11 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @package:com.lpc.demo1.controller.impl
@@ -25,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping(value = "/systemSetting",headers = "Accept=application/json;charset=utf-8")
-public class SystemSettingControllerImpl extends BaseController implements SystemSettingController {
+public class SystemSettingControllerImpl implements SystemSettingController {
 
     @Resource
     private UserServiceImpl userService;
@@ -84,33 +86,16 @@ public class SystemSettingControllerImpl extends BaseController implements Syste
 
     @RequestMapping(value = "/editDict",method = RequestMethod.POST)
     @ResponseBody
-    public JqGridListForm editDict(HttpServletRequest request,HttpServletResponse response){
+    public boolean editDict(SysDict sysDict,@RequestParam(value = "editType",required = true) String editType){
+        boolean result = false;
+        if (editType.equals("insert")){
+            result = dictService.addDict(sysDict);
+        }else if(editType.equals("edit")){
+            result = dictService.updateDict(sysDict);
+        }else{
 
-        Pagination pagination = new Pagination();
-        pagination.setPage(1);
-        pagination.setRecords(1);
-        pagination.setRows(1);
-        pagination.setSidx("id");
-        pagination.setSord("desc");
-        JqGridListForm jqGridListForm = dictService.findByPage(pagination);
-        return jqGridListForm;
+        }
+        return result;
     }
 
-//    @RequestMapping(value="updateDicts",method = RequestMethod.POST)
-//    @ResponseBody
-//    public JqGridListForm updateDicts(Dict dict){
-//
-//        return null;
-//    }
-//
-//    @RequestMapping(value="addDict",method = RequestMethod.POST)
-//    @ResponseBody
-//    public JqGridListForm addDict(Dict dict){
-//        if(dictService.addDict(dict)){
-//
-//        }
-//        return null;
-//    }
-//
-//    public JqGridListForm delDict()
 }
