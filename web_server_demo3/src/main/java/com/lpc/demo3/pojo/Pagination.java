@@ -33,9 +33,15 @@ public class Pagination implements Serializable {
      * 排序类型
      */
     private String sord;
+
     /**
-     * 总记录数
+     *
      */
-    private int records;
+    private boolean _search;
+
+    /**
+     *
+     */
+    private Long nd;
 
 }

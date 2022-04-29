@@ -1,10 +1,12 @@
 package com.lpc.demo3.controller.impl;
 
 import com.lpc.demo3.controller.SystemSettingController;
+import com.lpc.demo3.model.Role;
 import com.lpc.demo3.model.SysDict;
-import com.lpc.demo3.pojo.JqGridEditForm;
+import com.lpc.demo3.model.User;
 import com.lpc.demo3.pojo.JqGridListForm;
 import com.lpc.demo3.pojo.Pagination;
+import com.lpc.demo3.pojo.SearchPagination;
 import com.lpc.demo3.service.impl.DictServiceImpl;
 import com.lpc.demo3.service.impl.RoleServiceImpl;
 import com.lpc.demo3.service.impl.UserServiceImpl;
@@ -15,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @package:com.lpc.demo1.controller.impl
@@ -51,8 +53,16 @@ public class SystemSettingControllerImpl implements SystemSettingController {
         return jqGridListForm;
     }
 
-//    public
-
+    @RequestMapping(value = "/editUser",method = RequestMethod.POST)
+    @ResponseBody
+    public boolean editUser(User user,@RequestParam(required = true) String editType){
+        if(editType.equals("edit")){
+            return userService.updateUser(user);
+        }else if(editType.equals("insert")){
+            return userService.regsiter(user,user.getPass());
+        }
+        return false;
+    }
 
     @Override
     @RequestMapping(value = "/roleManage",method = RequestMethod.GET)
@@ -70,6 +80,24 @@ public class SystemSettingControllerImpl implements SystemSettingController {
         return jqGridListForm;
     }
 
+    @RequestMapping(value = "/editRole",method = RequestMethod.POST)
+    @ResponseBody
+    public boolean editRole(Role role, @RequestParam(required = true) String editType){
+
+        if(editType.equals("edit")){
+            return roleService.updateRole(role);
+        }else if(editType.equals("insert")){
+            return roleService.addRole(role);
+        }
+        return false;
+    }
+
+    @RequestMapping(value = "/delRole",method = RequestMethod.POST)
+    @ResponseBody
+    public boolean delRole(@RequestParam(required = true) Role role){
+        return roleService.delRole(role);
+    }
+
     @Override
     @RequestMapping(value = "/dictManage",method = RequestMethod.GET)
     public ModelAndView dictManage(ModelAndView view, Model model) {
@@ -84,11 +112,18 @@ public class SystemSettingControllerImpl implements SystemSettingController {
         return jqGridListForm;
     }
 
+    @RequestMapping(value = "/searchDict",method = RequestMethod.POST)
+    public JqGridListForm searchDict(SearchPagination searchPagination){
+
+        return null;
+    }
+
     @RequestMapping(value = "/editDict",method = RequestMethod.POST)
     @ResponseBody
     public boolean editDict(SysDict sysDict,@RequestParam(value = "editType",required = true) String editType){
         boolean result = false;
         if (editType.equals("insert")){
+            sysDict.setId(null);
             result = dictService.addDict(sysDict);
         }else if(editType.equals("edit")){
             result = dictService.updateDict(sysDict);
@@ -96,6 +131,15 @@ public class SystemSettingControllerImpl implements SystemSettingController {
 
         }
         return result;
+    }
+
+    @RequestMapping(value = "/delDict",method = RequestMethod.POST)
+    @ResponseBody
+    public boolean delDict(SysDict sysDict){
+        if (sysDict.getId() != null){
+            return dictService.delDict(sysDict);
+        }
+        return false;
     }
 
 }

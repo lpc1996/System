@@ -6,8 +6,6 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Resource;
-
 /**
  * @package:com.lpc.demo3.mapper.impl
  * @Author:旁观者

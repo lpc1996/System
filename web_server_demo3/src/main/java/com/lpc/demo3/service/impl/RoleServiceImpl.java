@@ -45,4 +45,16 @@ public class RoleServiceImpl extends MyService implements RoleService {
         List<Role> roleList = roleMapperTk.selectAll();
         return createJqGridListForm(roleList,getCount(null),pageId,pageSize);
     }
+
+    public boolean addRole(Role role){
+        return roleMapperTk.insert(role) == 1;
+    }
+
+    public boolean updateRole(Role role){
+        return roleMapperTk.updateByPrimaryKey(role) == 1;
+    }
+
+    public boolean delRole(Role role){
+        return roleMapperTk.delete(role) == 1;
+    }
 }

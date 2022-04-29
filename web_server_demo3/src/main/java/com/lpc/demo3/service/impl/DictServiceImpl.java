@@ -9,6 +9,8 @@ import com.lpc.demo3.pojo.Pagination;
 import com.lpc.demo3.service.DictService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.util.StringUtil;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -41,8 +43,10 @@ public class DictServiceImpl extends MyService implements DictService {
     public JqGridListForm findByPage(Pagination pagination) {
         int pageId = pagination.getPage() <= 0? 1:pagination.getPage();
         int pageSize = pagination.getRows() <= 0? 20: pagination.getRows();
+        Example example = new Example(SysDict.class);
+        example.setOrderByClause(StringUtil.camelhumpToUnderline(pagination.getSidx())+" "+pagination.getSord());
         PageHelper.startPage(pageId,pageSize);
-        List<SysDict> dictList = sysDictMapperTk.selectAll();
+        List<SysDict> dictList = sysDictMapperTk.selectByExample(example);
         return createJqGridListForm(dictList,getCount(null),pageId,pageSize);
     }
 
@@ -55,5 +59,7 @@ public class DictServiceImpl extends MyService implements DictService {
         return sysDictMapperTk.updateByPrimaryKey(record) == 1? true: false;
     }
 
-//    public
+    public boolean delDict(SysDict sysDict){
+        return sysDictMapperTk.delete(sysDict) == 1 ? true : false;
+    }
 }

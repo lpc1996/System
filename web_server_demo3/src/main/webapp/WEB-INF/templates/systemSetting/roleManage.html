@@ -18,10 +18,55 @@
                     <span class="card-title">角色管理</span>
                 </div>
                 <div class="card-body">
-                        <table class="table table-bordered" id="user-table">
+                    <div class="btn-group mb-3">
+                        <input type="text" class="rounded mr-3" name="searchValue"/>
+                        <button type="button" class="btn btn-primary" th:text="查询"/>
+                        <button class="btn btn-primary" onclick="$('#role-modal').modal('show');clearForm('role-form');$('#role-submit').attr('value','insert')">新增</button>
+                        <button class="btn btn-primary" onclick="$('#role-submit').attr('value','edit');initEditForm('role-form','role-modal','role-table');">编辑</button>
+                        <button class="btn btn-primary">删除</button>
+                        <button class="btn btn-primary" onclick="reloadJqGrid('role-table')">刷新</button>
+                    </div>
+                    <table class="table table-bordered" id="role-table">
 
-                        </table>
-                        <div id="pager"></div>
+                    </table>
+                    <div id="pager"></div>
+                </div>
+                <div class="modal fade" id="role-modal" tabindex="-1" role="dialog" aria-labelledby="role-modal-label" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="role-modal-label">编辑角色</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </div>
+                            <form id="role-form" class="form-horizontal" th:action="@{/systemSetting/editRole}">
+                                <div class="modal-body">
+                                    <div class="form-group d-none">
+                                        <div class="input-group">
+                                            <label for="role-id">角色Id：</label>
+                                            <input id="role-id" class="form-control" type="number" name="id" readonly="true">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label for="role-name">角色名称：</label>
+                                            <input id="role-name" class="form-control" type="text" name="name"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label for="role-info">角色描述：</label>
+                                            <input id="role-info" class="form-control" type="text" name="info">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearForm('role-form')">取消</button>
+                                    <button id="role-submit" type="button" class="btn btn-primary" value="" onclick="editRole();">提交</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -32,8 +77,8 @@
         })
 
         function pageInit() {
-            let userTable = $("#user-table");
-            $(userTable).jqGrid({
+            let roleTable = $("#role-table");
+            $(roleTable).jqGrid({
                 url:"/web_server/systemSetting/getRoles",
                 mtype:"post",
                 dataType:"json",
@@ -52,8 +97,8 @@
                     {name:'info',index:'info', width:100}
                 ],
                 pager : '#pager',
-                page:$(userTable).getGridParam('page'),
-                rows:$(userTable).getGridParam('rows'),
+                page:$(roleTable).getGridParam('page'),
+                rows:$(roleTable).getGridParam('rows'),
                 sortname : 'id',
                 sortorder : "desc",
                 shrinkToFit:true,
@@ -66,32 +111,26 @@
                     repeatitems : false
                 },
                 gridComplete:function(){
-                    let total = $(userTable).getGridParam("total");
-                    let rows = $(userTable).getGridParam("rows");
-                    let pageNum = total/rows;
-                    if(pageNum == 0){
-                        pageNum++;
-                    }
-                    // $(userTable).setGridParams("rows");
                 },
                 loadError:function(xhr,status,error){
                     alert("请求数据"+xhr.readyState+" "+status+" "+error);
-                    console.log("请求数据"+xhr.readyState+" "+status+" "+error)
                 },
                 autoencode: true,
                 gridview: true,
                 viewrecords: true,//定义是否要显示总记录数
                 emptyrecords: "没有数据",
                 caption:"角色信息管理"
-            }).navGrid('#pager', {edit : false,add : false,del : false});
+            }).navGrid('#pager', {edit : false,add : false,del : false,search:false});
             let cardBody = $("div.card-body")
-            $(userTable).jqGrid('setGridWidth',$(cardBody).width());
+            $(roleTable).jqGrid('setGridWidth',$(cardBody).width());
             $(window).on('resize.jqGrid', function () {
-                let parentDom = $(userTable).parent();
-                $(userTable).jqGrid('setGridWidth',$(parentDom).width());
+                let parentDom = $(roleTable).parent();
+                $(roleTable).jqGrid('setGridWidth',$(parentDom).width());
             });
 
         }
     </script>
+
+    <script th:src="@{/static/js/validate/role_validate.js}"></script>
 </body>
 </html>

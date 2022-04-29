@@ -8,6 +8,8 @@ import com.lpc.demo3.pojo.UserForm;
 import com.lpc.demo3.service.MenuService;
 import com.lpc.demo3.service.impl.UserServiceImpl;
 import com.lpc.demo3.util.RandomCodeUtil;
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,7 @@ import java.util.List;
  * @By:IntelliJ IDEA
  * @FileName:UserControllerImpl.java
  */
+@Log4j2
 @Controller
 @RequestMapping(value = "/user")
 @SessionAttributes(names = {"user","archive","menus"})
@@ -70,6 +73,7 @@ public class UserControllerImpl implements UserController {
             cookieController.addCookie(response, "userId", userForm.getUserId());
             cookieController.addCookie(response, "userName", user.getName());
             cookieController.addCookie(response,"userImg",user.getImgUrl());
+            log.info("用户"+user.getId()+"登录");
             view.setViewName("redirect:/index");
         }
         return view;
@@ -136,7 +140,7 @@ public class UserControllerImpl implements UserController {
     @Override
     @RequestMapping(value = "updateUser")
     public ModelAndView updateUser(ModelAndView view, User user, HttpServletRequest request, HttpServletResponse response, Model model) {
-
+        userService.updateUser(user);
         view.setViewName("redirect:/user/psersonalInfo");
         return view;
     }

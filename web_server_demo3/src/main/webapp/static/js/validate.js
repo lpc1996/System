@@ -10,6 +10,7 @@ $().ready(function (){
     loginValidate();
     updateUserValidate();
     dictValidate();
+    roleValidate();
 });
 
 function updatePassValidate(){
@@ -141,27 +142,19 @@ function dictValidate(){
                 required:"请输入字典状态",
             }
         },
-        submitHandler:function(form){
-            // let dict = {"name":$(form).data()};
-            console.log($(form).data());
-            form.submit();
-            // $.ajax({
-            //     type:"POST",
-            //     url:$(form).attr("action"),
-            //     dataType:"josn",
-            //     success:function (xhr) {
-            //         alert(xht);
-            //         $("dict-table").trigger("reloadGrid");
-            //     },
-            //     error:function (){
-            //
-            //     }
-            // });
+    });
+
+}
+
+function roleValidate(){
+    $("#role-form").validate({
+        rules:{
+            name:{
+                required:true,
+            },
+            info:{
+                required:true,
+            }
         }
     });
-
-    $("#submit-dict").on("click",function() {
-        $("form#dict-form").validate();
-    });
-
 }

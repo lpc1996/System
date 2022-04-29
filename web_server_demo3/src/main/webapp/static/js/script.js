@@ -37,9 +37,36 @@ function getFormData(form) {
     return d;
 }
 
+function getGridSelData(grid){
+    let selId = $(grid).jqGrid("getGridParam","selrow");
+    return $(grid).getRowData(selId);
+}
+
 function hasSelect(table){
     let selectRow = $(table).jqGrid("getGridParam","selrow");
     return selectRow == null ? true : false;
+}
+
+/**
+ * 初始化表单数据
+ * @param formId
+ * @param modalId
+ */
+function initEditForm(formId,modalId,tableId){
+    if(hasSelect($("#"+tableId))){
+        alert("未选中数据");
+    }else{
+        let form = $("#"+formId);
+        let modal = $("#"+modalId);
+        let table = $("#"+tableId);
+        let rowId = $(table).jqGrid("getGridParam","selrow");
+        let selData = $(table).getRowData(rowId);
+        let inputArray = $("#"+formId+" input");
+        $.each(inputArray,function (index){
+            $(inputArray[index]).attr("value",selData[$(inputArray[index]).attr("name")]);
+        });
+        modal.modal("show");
+    }
 }
 
 /**
@@ -51,5 +78,29 @@ function clearForm(formId){
     $.each(inputArray, function (index){
         $(inputArray[index]).attr("value",null);
     });
+}
+
+function reloadJqGrid(gridId){
+    let grid = $("#"+gridId);
+    $.ajax({
+        url:$(grid).jqGrid("getGridParam","url"),
+        type:"post",
+        dataType:"json",
+        data:{
+            rows:10,
+            page:$(grid).jqGrid("getGridParam","page"),
+            sidx:"id",
+            sord:"asc",
+            _search:"false"
+        },
+        success:function (result){
+            $(grid).jqGrid('clearGridData');
+            $(grid).jqGrid("setGridParam",{
+                dataType:"local",
+                data:result,
+                page:1
+            }).trigger("reloadGrid");
+        }
+    })
 }
 

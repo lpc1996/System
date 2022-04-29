@@ -1,9 +1,5 @@
 package com.lpc.demo3.mapper;
 
-import java.util.List;
-
-import com.lpc.demo3.model.Archive;
-
 /**
   @package:com.lpc.mapper
   @Author:旁观者

@@ -41,7 +41,7 @@
                                     </li>
                                     <li class="list-group-item"><span>账户Id</span><span class="float-right" th:text="${session.user.id}"></span></li>
                                     <li class="list-group-item"><span>账户昵称</span><span class="float-right" th:text="${session.user.name}"></span></li>
-                                    <li class="list-group-item"><span>创建时间</span><span class="float-right" th:text="${#dates.format(session.user.createTime,'yyyy-MM-dd')}+ '  ' +${#dates.format(user.createTime,'hh:mm:ss')}"></span></li>
+                                    <li class="list-group-item"><span>创建时间</span><span class="float-right" th:text="${#dates.format(session.user.createTime,'yyyy-MM-dd')}+ ' ' +${#dates.format(session.user.createTime,'hh:mm:ss')}"></span></li>
                                     <li class="list-group-item"><span>账户状态</span><span class="float-right" th:text="${session.user.status}"></span></li>
                                     <li class="list-group-item"><a class="btn btn-primary" role="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false">修改账户信息</a></li>
                                 </ul>
@@ -65,7 +65,7 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <label for="createTimeInput">创建时间：</label>
-                                            <input id="createTimeInput" name="createTime" type="datetime-local" class="form-control" th:value="${#dates.format(session.user.createTime,'yyyy-MM-dd')}+'T' +${#dates.format(user.createTime,'hh:mm:ss')}" readonly="true">
+                                            <input id="createTimeInput" name="createTime" type="datetime" class="form-control" th:value="${#dates.format(session.user.createTime,'yyyy-MM-dd')}+' ' +${#dates.format(session.user.createTime,'hh:mm:ss')}" readonly="true">
                                         </div>
                                     </div>
                                     <div class="form-group">

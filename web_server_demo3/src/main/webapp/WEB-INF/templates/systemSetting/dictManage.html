@@ -18,15 +18,17 @@
                     <span class="card-title">字典管理</span>
                 </div>
                 <div class="card-body">
+
                     <div class="btn-group mb-3">
-                        <input class="mr-3 rounded" type="text" name="search" />
-                        <input class="btn btn-primary" type="button" value="查询" />
+                        <div id="dict-search" class="mr-3"></div>
+<!--                        <input class="mr-3 rounded" type="text" name="search" />-->
+<!--                        <input class="btn btn-primary" type="button" value="查询" />-->
                         <button id="new-dict" class="btn btn-primary" data-toggle="modal"
                                 data-target="#add-dict-modal"
                                 onclick="$('input#dict-updateTime').val(getNowTime());$('form#dict-form #submit-dict').attr('value','insert');">新增</button>
-                        <button id="edit-dict" class="btn btn-primary" onclick="$('form#dict-form #submit-dict').attr('value','edit');initDictForm($('#add-dict-modal'));">编辑</button>
-                        <button id="def-dict" class="btn btn-primary">删除</button>
-                        <button class="btn btn-primary refresh-btn" onclick="$('form#dict-form').trigger('reloadGrid');">刷新</button>
+                        <button id="edit-dict" class="btn btn-primary" onclick="$('form#dict-form #submit-dict').attr('value','edit');initEditForm('dict-form','add-dict-modal','dict-table');">编辑</button>
+                        <button id="def-dict" class="btn btn-primary" onclick="delDict()">删除</button>
+                        <button class="btn btn-primary refresh-btn" onclick="reloadJqGrid('dict-table')">刷新</button>
                     </div>
                     <table class="table table-bordered" id="dict-table">
                         <tr>
@@ -95,11 +97,12 @@
     <script>
         $().ready(function (){
             pageInit();
+            searchInit();
         })
 
         function pageInit() {
             let dictTable = $("#dict-table");
-            $("#dict-table").jqGrid({
+            $(dictTable).jqGrid({
                 url:"/web_server/systemSetting/getDicts",
                 dataType:"json",
                 contentType:"application/json;charset=utf-8",
@@ -109,7 +112,7 @@
                 multiselect: true,
                 cellEdit:true,
                 editurl: '/web_server/systemSetting/editDict',
-                // styleUI: 'Bootstrap',
+                styleUI: 'Bootstrap',
                 pager : '#pager',
                 page:$(dictTable).getGridParam("page"),
                 rows:$(dictTable).getGridParam('rows'),
@@ -165,10 +168,29 @@
 
                 },
                 loadError:function(xhr,status,error){
-                    // alert("请求数据"+xhr.readyState+" "+status+" "+error);
+                    alert("请求数据"+xhr.readyState+" "+status+" "+error);
                 }
             }).navGrid('#pager', {
                 edit : false,add : false ,del : false,search:false,ref:false
+            });
+        }
+
+        function searchInit(){
+            let dictSearch = $("#dict-search");
+            $(dictSearch).jqGrid('filterGrid','#dict-table',{
+                gridModel:false,
+                filterModel : [{
+                    label : '查询',
+                    name: 'searchVal',
+                    stype: 'text'
+                }],
+                // formtype:'vertical',
+                autosearch:false,
+                formclass:'form-horizontal',
+                buttonclass:"btn btn-primary",
+                searchButton:'Search',
+                // clearButton:"重置",
+                url:"/web_server/systemSetting/searchDict"
             });
         }
 

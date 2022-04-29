@@ -10,10 +10,6 @@ import javax.persistence.Id;
  * @author 濃霧-遠方
  * @date 2021/11/8
  */
-
-/**
-    * role
-    */
 @Data
 public class Role {
     /**

@@ -1,7 +1,5 @@
 package com.lpc.demo3.mapper;
 
-import com.lpc.demo3.model.SysDict;
-
 /**
 @package:com.lpc.demo3.mapper
 @Author:旁观者

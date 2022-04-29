@@ -1,6 +1,5 @@
 package com.lpc.demo3.service;
 
-import com.lpc.demo3.model.Dict;
 import com.lpc.demo3.model.SysDict;
 
 /**

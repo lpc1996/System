@@ -96,4 +96,8 @@ public class UserServiceImpl extends MyService implements UserService {
         List<User> userList = userMapperTk.selectAll();
         return createJqGridListForm(userList,getCount(null),pageId,pageSize);
     }
+
+    public boolean delUser(User user){
+        return userMapperTk.delete(user) == 1;
+    }
 }

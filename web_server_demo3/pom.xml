@@ -33,6 +33,7 @@
         <persistence.version>1.0.2</persistence.version>
         <fastjson.version>1.2.79</fastjson.version>
         <jackson.version>2.9.3</jackson.version>
+        <clickhouse.version>0.3.2-patch8</clickhouse.version>
     </properties>
 
     <dependencies>
@@ -145,6 +146,13 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.clickhouse/clickhouse-jdbc -->
+        <dependency>
+            <groupId>com.clickhouse</groupId>
+            <artifactId>clickhouse-jdbc</artifactId>
+            <version>${clickhouse.version}</version>
+        </dependency>
+
 
     </dependencies>
 

@@ -65,14 +65,14 @@
             <appender-ref ref="RollingFile"/>
         </root>
 
-        <logger name="org.springframework" level="INFO" additivity="false" >
+        <logger name="org.springframework" level="INFO" additivity="true" >
             <appender-ref ref="RollingFile"/>
         </logger>
 
-        <logger name="com.lpc.demo1" level="INFO" additivity="false" >
+        <logger name="com.lpc.demo1" level="INFO" additivity="true" >
             <appender-ref ref="RollingFile"/>
         </logger>
-        <logger name="log4j.logger.com.ibatis" level="DEBUG" additivity="false" >
+        <logger name="log4j.logger.com.ibatis" level="DEBUG" additivity="true" >
             <appender-ref ref="RollingFile"/>
         </logger>
 <!--        <logger name="com.XXXXX" level="DEBUG" additivity="false" >-->

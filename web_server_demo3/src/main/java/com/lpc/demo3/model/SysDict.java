@@ -1,13 +1,12 @@
 package com.lpc.demo3.model;
 
-import java.util.Date;
 import lombok.Data;
 
-import javax.annotation.Generated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 /**
 @package:com.lpc.demo3.model
