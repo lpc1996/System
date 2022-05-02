@@ -2,15 +2,15 @@
     color:darkred;
 }
 
-.ui-jqgrid .ui-jqgrid-title{
-    font-size:15px;
-}    /*修改grid标题的字体大小*/
+/*.ui-jqgrid .ui-jqgrid-title{*/
+/*    font-size:15px;*/
+/*}    !*修改grid标题的字体大小*!*/
 
-.ui-jqgrid-sortable {
-    font-size:20px;
-}   /*修改列名的字体大小*/
+/*.ui-jqgrid-sortable {*/
+/*    font-size:20px;*/
+/*}   !*修改列名的字体大小*!*/
 
-.ui-jqgrid tr.jqgrow td {
-    font-size:15px;
-    font-family:"宋体"
-} /*修改表格内容字体*/
+/*.ui-jqgrid tr.jqgrow td {*/
+/*    font-size:15px;*/
+/*    font-family:"宋体"*/
+/*} !*修改表格内容字体*!*/
