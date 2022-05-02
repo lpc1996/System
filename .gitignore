@@ -1,0 +1,5 @@
+# 项目排除路径
+/.idea/
+/web_server_demo3/target/
+/manage/target/
+/base/target/
