@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lpc.module1.mapper.SysDictMapper">
+  <resultMap id="BaseResultMap" type="com.lpc.module1.model.SysDict">
+    <!--@mbg.generated generated on Wed May 04 14:42:33 CST 2022.-->
+    <!--@Table sys_dict-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="code" jdbcType="INTEGER" property="code" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Wed May 04 14:42:33 CST 2022.-->
+    id, `name`, `type`, code, `value`, `status`, update_time
+  </sql>
+</mapper>

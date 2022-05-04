@@ -4,18 +4,36 @@
     <option name="projectProfile">
       <ProjectProfile>
         <option name="controllerTemplateString" value="&#10;#* @vtlvariable name=&quot;tableName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;entityPackageName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;entityClassName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;servicePackageName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;serviceClassName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;mapperPackageName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;mapperClassName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;info&quot; type=&quot;com.ccnode.codegenerator.mybatisGenerator.MybatisGeneratorTableInfo&quot; *#&#10;&#10;import $!{entityPackageName}.$!{entityClassName};&#10;import $!{servicePackageName}.$!{serviceClassName};&#10;import org.springframework.web.bind.annotation.*;&#10;&#10;#set($serviceFirstLower = $!{serviceClassName.substring(0,1).toLowerCase()}+$!{serviceClassName.substring(1,$!{serviceClassName.length()})})&#10;import javax.annotation.Resource;&#10;&#10;/**&#10;* $!{info.tableRemarks}($!{tableName})表控制层&#10;*&#10;* @author xxxxx&#10;*/&#10;@RestController&#10;@RequestMapping(&quot;$!{tableName}&quot;)&#10;public class $!{entityClassName}Controller {&#10;/**&#10;* 服务对象&#10;*/&#10;@Resource&#10;private $!{serviceClassName} $!{serviceFirstLower};&#10;&#10;/**&#10;* 通过主键查询单条数据&#10;*&#10;* @param id 主键&#10;* @return 单条数据&#10;*/&#10;@GetMapping(&quot;selectOne&quot;)&#10;public $!{entityClassName} selectOne(Integer id) {&#10;return $!{serviceFirstLower}.selectByPrimaryKey(id);&#10;}&#10;&#10;}" />
+        <option name="deleteByPrimayKeyEnabled" value="false" />
         <option name="genSqlFilePath" value="$PROJECT_DIR$/base/src/main/resources/sql" />
-        <option name="javaMapperPackage" value="com.lpc.module2.mapper" />
-        <option name="javaMapperPath" value="$PROJECT_DIR$/base/src/main/java" />
-        <option name="javaModelPackage" value="com.lpc.module2.model" />
-        <option name="javaModelPath" value="$PROJECT_DIR$/base/src/main/java" />
-        <option name="lastDatabaseCrudChooseModuleName" value="base" />
+        <option name="generateService" value="true" />
+        <option name="insertMethodEnabled" value="false" />
+        <option name="insertSelectiveMethodEnabled" value="false" />
+        <option name="javaMapperPackage" value="com.lpc.module1.mapper" />
+        <option name="javaMapperPath" value="$PROJECT_DIR$/manage/src/main/java" />
+        <option name="javaModelPackage" value="com.lpc.module1.model" />
+        <option name="javaModelPath" value="$PROJECT_DIR$/manage/src/main/java" />
+        <option name="lastDatabaseCrudChooseModuleName" value="manage" />
         <option name="lombokDataAnnotation" value="true" />
-        <option name="mapperAnnotaion" value="true" />
         <option name="mapperSuperClass" value="com.lpc.module2.mapper.MyMapper" />
+        <option name="modelSuperClass" value="com.lpc.module1.model.MyModel" />
         <option name="moduleNameToPackageAndPathMap">
           <map>
-
+            <entry key="manage">
+              <value>
+                <UserPackageAndPathInfoByModule>
+                  <option name="javaMapperPackage" value="com.lpc.module1.mapper" />
+                  <option name="javaMapperPath" value="$PROJECT_DIR$/manage/src/main/java" />
+                  <option name="javaModelPacakge" value="com.lpc.module1.model" />
+                  <option name="javaModelPath" value="$PROJECT_DIR$/manage/src/main/java" />
+                  <option name="javaServiceInterfacePath" value="$PROJECT_DIR$/manage/src/main/java" />
+                  <option name="javaServicePackage" value="com.lpc.module1.service" />
+                  <option name="javaServicePath" value="$PROJECT_DIR$/manage/src/main/java" />
+                  <option name="xmlPackage" value="mapper" />
+                  <option name="xmlPath" value="$PROJECT_DIR$/manage/src/main/resources" />
+                </UserPackageAndPathInfoByModule>
+              </value>
+            </entry>
             <entry key="web_server_demo3">
               <value>
                 <UserPackageAndPathInfoByModule>
@@ -33,13 +51,23 @@
           </map>
         </option>
         <option name="p3CComment" value="true" />
+        <option name="selectByPrimaryKeyEnabled" value="false" />
         <option name="tableGenerateConfigs">
           <map>
             <entry key="school_system:archive">
               <value>
                 <TableGenerateConfig>
+                  <option name="deleteByPrimayKeyEnabled" value="false" />
+                  <option name="generatedKey" value="" />
+                  <option name="insertMethodEnabled" value="false" />
+                  <option name="insertSelectiveMethodEnabled" value="false" />
                   <option name="javaModelName" value="Archive" />
-                  <option name="moduleName" value="web_server" />
+                  <option name="moduleName" value="manage" />
+                  <option name="selectByPrimaryKeyEnabled" value="false" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateByPrimaryKeySelectiveEnabled" value="false" />
+                  <option name="updateByPrimaykeyEnabled" value="false" />
                   <option name="useActualColumnName" value="false" />
                 </TableGenerateConfig>
               </value>
@@ -71,11 +99,15 @@
             <entry key="school_system:role">
               <value>
                 <TableGenerateConfig>
+                  <option name="deleteByPrimayKeyEnabled" value="false" />
                   <option name="generatedKey" value="id" />
+                  <option name="insertMethodEnabled" value="false" />
+                  <option name="insertSelectiveMethodEnabled" value="false" />
                   <option name="javaModelName" value="Role" />
-                  <option name="moduleName" value="server" />
-                  <option name="sequenceColumn" value="" />
-                  <option name="sequenceId" value="" />
+                  <option name="moduleName" value="manage" />
+                  <option name="selectByPrimaryKeyEnabled" value="false" />
+                  <option name="updateByPrimaryKeySelectiveEnabled" value="false" />
+                  <option name="updateByPrimaykeyEnabled" value="false" />
                   <option name="useActualColumnName" value="false" />
                 </TableGenerateConfig>
               </value>
@@ -83,11 +115,15 @@
             <entry key="school_system:role_menu">
               <value>
                 <TableGenerateConfig>
+                  <option name="deleteByPrimayKeyEnabled" value="false" />
                   <option name="generatedKey" value="id" />
+                  <option name="insertMethodEnabled" value="false" />
+                  <option name="insertSelectiveMethodEnabled" value="false" />
                   <option name="javaModelName" value="RoleMenu" />
-                  <option name="moduleName" value="server" />
-                  <option name="sequenceColumn" value="" />
-                  <option name="sequenceId" value="" />
+                  <option name="moduleName" value="manage" />
+                  <option name="selectByPrimaryKeyEnabled" value="false" />
+                  <option name="updateByPrimaryKeySelectiveEnabled" value="false" />
+                  <option name="updateByPrimaykeyEnabled" value="false" />
                   <option name="useActualColumnName" value="false" />
                 </TableGenerateConfig>
               </value>
@@ -95,11 +131,15 @@
             <entry key="school_system:role_user">
               <value>
                 <TableGenerateConfig>
+                  <option name="deleteByPrimayKeyEnabled" value="false" />
                   <option name="generatedKey" value="id" />
+                  <option name="insertMethodEnabled" value="false" />
+                  <option name="insertSelectiveMethodEnabled" value="false" />
                   <option name="javaModelName" value="RoleUser" />
-                  <option name="moduleName" value="server" />
-                  <option name="sequenceColumn" value="" />
-                  <option name="sequenceId" value="" />
+                  <option name="moduleName" value="manage" />
+                  <option name="selectByPrimaryKeyEnabled" value="false" />
+                  <option name="updateByPrimaryKeySelectiveEnabled" value="false" />
+                  <option name="updateByPrimaykeyEnabled" value="false" />
                   <option name="useActualColumnName" value="false" />
                 </TableGenerateConfig>
               </value>
@@ -107,11 +147,15 @@
             <entry key="school_system:sys_dict">
               <value>
                 <TableGenerateConfig>
+                  <option name="deleteByPrimayKeyEnabled" value="false" />
                   <option name="generatedKey" value="id" />
+                  <option name="insertMethodEnabled" value="false" />
+                  <option name="insertSelectiveMethodEnabled" value="false" />
                   <option name="javaModelName" value="SysDict" />
-                  <option name="moduleName" value="web_server_demo3" />
-                  <option name="sequenceColumn" value="" />
-                  <option name="sequenceId" value="" />
+                  <option name="moduleName" value="manage" />
+                  <option name="selectByPrimaryKeyEnabled" value="false" />
+                  <option name="updateByPrimaryKeySelectiveEnabled" value="false" />
+                  <option name="updateByPrimaykeyEnabled" value="false" />
                   <option name="useActualColumnName" value="false" />
                 </TableGenerateConfig>
               </value>
@@ -119,10 +163,15 @@
             <entry key="school_system:sys_menu">
               <value>
                 <TableGenerateConfig>
+                  <option name="deleteByPrimayKeyEnabled" value="false" />
                   <option name="generatedKey" value="id" />
+                  <option name="insertMethodEnabled" value="false" />
+                  <option name="insertSelectiveMethodEnabled" value="false" />
                   <option name="javaModelName" value="SysMenu" />
-                  <option name="sequenceColumn" value="" />
-                  <option name="sequenceId" value="" />
+                  <option name="moduleName" value="manage" />
+                  <option name="selectByPrimaryKeyEnabled" value="false" />
+                  <option name="updateByPrimaryKeySelectiveEnabled" value="false" />
+                  <option name="updateByPrimaykeyEnabled" value="false" />
                   <option name="useActualColumnName" value="false" />
                 </TableGenerateConfig>
               </value>
@@ -130,19 +179,25 @@
             <entry key="school_system:user">
               <value>
                 <TableGenerateConfig>
-                  <option name="generatedKey" value="id" />
+                  <option name="deleteByPrimayKeyEnabled" value="false" />
+                  <option name="insertMethodEnabled" value="false" />
+                  <option name="insertSelectiveMethodEnabled" value="false" />
                   <option name="javaModelName" value="User" />
-                  <option name="moduleName" value="server" />
-                  <option name="sequenceColumn" value="" />
-                  <option name="sequenceId" value="" />
+                  <option name="moduleName" value="manage" />
+                  <option name="selectByPrimaryKeyEnabled" value="false" />
+                  <option name="updateByPrimaryKeySelectiveEnabled" value="false" />
+                  <option name="updateByPrimaykeyEnabled" value="false" />
                   <option name="useActualColumnName" value="false" />
                 </TableGenerateConfig>
               </value>
             </entry>
           </map>
         </option>
+        <option name="updateByPrimaryKeySelectiveEnabled" value="false" />
+        <option name="updateByPrimaykeyEnabled" value="false" />
+        <option name="useCommonMapper" value="true" />
         <option name="xmlMapperPackage" value="mapper" />
-        <option name="xmlMapperPath" value="$PROJECT_DIR$/base/src/main/resources" />
+        <option name="xmlMapperPath" value="$PROJECT_DIR$/manage/src/main/resources" />
       </ProjectProfile>
     </option>
   </component>

@@ -19,15 +19,12 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-<!--    自动扫描包-->
-    <context:component-scan base-package="com.lpc.module1"/>
-
     <mvc:default-servlet-handler/>
 
     <mvc:resources mapping="/static/**" location="/static/" />
 
     <bean id="viewResolve" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
-        <property name="prefix" value="/WEB-INF/templates/" />
+        <property name="prefix" value="/WEB-INF/template/" />
         <property name="suffix" value=".html"/>
         <property name="templateMode" value="HTML" />
         <property name="cacheable" value="false" />
@@ -50,13 +47,10 @@
             <bean class="com.lpc.module1.filter.SessionTimeOutFilter">
                 <property name="allowUrls">
                     <list>
-                        <value>/user/login</value>
-                        <value>/user/check</value>
-                        <value>/user/getRandomCodeImg</value>
-                        <value>/static/js</value>
-                        <value>/static/css</value>
-                        <value>/static/img</value>
-                        <value>/static/webfonts</value>
+                        <value>/admin/login</value>
+                        <value>/admin/check</value>
+                        <value>/admin/getRandomCodeImg</value>
+                        <value>/static/</value>
                     </list>
                 </property>
             </bean>
@@ -67,7 +61,7 @@
           class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
             <props>
-                <prop key="com.lpc.module1.filter.SessionTimeoutException">user/login.html</prop>
+                <prop key="com.lpc.module1.filter.SessionTimeoutException">login.html</prop>
             </props>
         </property>
     </bean>

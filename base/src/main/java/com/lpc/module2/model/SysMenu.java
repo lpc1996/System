@@ -3,6 +3,11 @@ package com.lpc.module2.model;
 import java.util.Date;
 import lombok.Data;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * @package:com.lpc.module2.model
  * @Author:旁观者
@@ -11,10 +16,13 @@ import lombok.Data;
  * 系统菜单表
  */
 @Data
+@Table(name = "sys_menu")
 public class SysMenu {
     /**
      * ID
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**

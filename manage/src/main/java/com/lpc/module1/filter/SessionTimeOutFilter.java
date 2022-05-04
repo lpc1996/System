@@ -1,6 +1,6 @@
 package com.lpc.module1.filter;
 
-import com.lpc.module2.model.User;
+import com.lpc.module1.model.User;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 

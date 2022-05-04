@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lpc.module1.mapper.SysMenuMapper">
+  <resultMap id="BaseResultMap" type="com.lpc.module1.model.SysMenu">
+    <!--@mbg.generated generated on Wed May 04 14:42:33 CST 2022.-->
+    <!--@Table sys_menu-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="href" jdbcType="VARCHAR" property="href" />
+    <result column="target" jdbcType="VARCHAR" property="target" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    <result column="delete_at" jdbcType="TIMESTAMP" property="deleteAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Wed May 04 14:42:33 CST 2022.-->
+    id, pid, title, icon, href, target, sort, `status`, remark, create_at, update_at, 
+    delete_at
+  </sql>
+
+  <select id="selectByUserId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from sys_menu sm,role_menu rm,role_user ru
+    where ru.user_id = #{userId,jdbcType=VARCHAR} and ru.role_id = rm.role_id and rm.menu_id = sm.id
+  </select>
+</mapper>

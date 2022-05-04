@@ -18,7 +18,7 @@
   </sql>
 
   <select id="selectByUserId" resultMap="BaseResultMap">
-    select m.id,m.name,m.parent_id,m.level,m.url,m.icon_url,m.menu_code
+    select <include refid="Base_Column_List" />
     from menu m,role_menu rm,role_user ru
     where m.id=rm.menu_id AND rm.role_id = ru.role_id AND ru.user_id = #{userId,jdbcType=VARCHAR};
   </select>

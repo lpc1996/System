@@ -22,4 +22,10 @@
     id, pid, title, icon, href, target, sort, `status`, remark, create_at, update_at, 
     delete_at
   </sql>
+
+  <select id="getMenuByUserId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from sys_menu sm,role_user ru,role_menu rm
+    where ru.user_id=#{id,jdbcType=VARCHAR} and rm.role_id=ru.role_id and sm.id=rm.menu_id
+  </select>
 </mapper>

@@ -1,4 +1,9 @@
 package com.lpc.module2.mapper;
+
+import com.lpc.module2.model.SysMenu;
+
+import java.util.List;
+
 /**
  * @package:com.lpc.module2.mapper
  * @Author:旁观者
@@ -9,4 +14,5 @@ package com.lpc.module2.mapper;
 
 public interface SysMenuMapper extends MyMapper {
 
+    List<SysMenu> getMenuByUserId(String id);
 }

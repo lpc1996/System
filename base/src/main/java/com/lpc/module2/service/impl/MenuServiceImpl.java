@@ -2,8 +2,11 @@ package com.lpc.module2.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.lpc.module2.mapper.MenuMapper;
+import com.lpc.module2.mapper.SysMenuMapper;
 import com.lpc.module2.mapper.tkMapper.MenuMapperTk;
+import com.lpc.module2.mapper.tkMapper.SysMenuMapperTk;
 import com.lpc.module2.model.Menu;
+import com.lpc.module2.model.SysMenu;
 import com.lpc.module2.pojo.JqGridListForm;
 import com.lpc.module2.pojo.Pagination;
 import com.lpc.module2.service.MenuService;
@@ -26,8 +29,11 @@ public class MenuServiceImpl extends MyService implements MenuService {
     private MenuMapper menuMapper;
     @Resource
     private MenuMapperTk menuMapperTk;
+    @Resource
+    private SysMenuMapper sysMenuMapper;
+    @Resource
+    private SysMenuMapperTk sysMenuMapperTk;
 
-    @Override
     public JqGridListForm findByPage(Pagination pagination) {
         int pageId = pagination.getPage() <= 0? 1:pagination.getPage();
         int pageSize = pagination.getRows() <= 0? 20: pagination.getRows();
@@ -42,5 +48,11 @@ public class MenuServiceImpl extends MyService implements MenuService {
     public List<Menu> getUserMenu(String userId){
         List<Menu> menuList = menuMapper.selectByUserId(userId);
         return menuList;
+    }
+
+    @Override
+    public List<SysMenu> getMenu(String userId) {
+        List<SysMenu> menus = sysMenuMapper.getMenuByUserId(userId);
+        return menus;
     }
 }

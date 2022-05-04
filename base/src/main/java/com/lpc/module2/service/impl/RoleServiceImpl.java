@@ -37,7 +37,6 @@ public class RoleServiceImpl extends MyService implements RoleService {
         return count;
     }
 
-    @Override
     public JqGridListForm findByPage(Pagination pagination) {
         int pageId = pagination.getPage() <= 0? 1:pagination.getPage();
         int pageSize = pagination.getRows() <= 0? 20: pagination.getRows();

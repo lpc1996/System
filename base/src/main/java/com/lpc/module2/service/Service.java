@@ -12,6 +12,4 @@ import com.lpc.module2.pojo.Pagination;
  */
 public interface Service {
 
-    JqGridListForm findByPage(Pagination pagination);
-
 }

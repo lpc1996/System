@@ -1,6 +1,7 @@
 package com.lpc.module2.service;
 
 import com.lpc.module2.model.Menu;
+import com.lpc.module2.model.SysMenu;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ import java.util.List;
 public interface MenuService extends Service{
 
     List<Menu> getUserMenu(String userId);
+
+    List<SysMenu> getMenu(String userId);
 }

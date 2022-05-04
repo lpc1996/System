@@ -14,7 +14,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    `id`, `name`, 'img_url' ,`create_time`, `status`
+    `id`, `name`, img_url ,`create_time`, `status`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--@mbg.generated-->

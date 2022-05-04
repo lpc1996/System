@@ -39,7 +39,6 @@ public class DictServiceImpl extends MyService implements DictService {
         return count;
     }
 
-    @Override
     public JqGridListForm findByPage(Pagination pagination) {
         int pageId = pagination.getPage() <= 0? 1:pagination.getPage();
         int pageSize = pagination.getRows() <= 0? 20: pagination.getRows();

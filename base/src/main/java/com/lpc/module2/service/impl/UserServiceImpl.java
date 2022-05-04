@@ -1,8 +1,8 @@
 package com.lpc.module2.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.lpc.module2.mapper.ArchiveMapper;
-import com.lpc.module2.mapper.UserMapper;
+import com.lpc.module2.mapper.impl.ArchiveMapperImpl;
+import com.lpc.module2.mapper.impl.UserMapperImpl;
 import com.lpc.module2.mapper.tkMapper.ArchiveMapperTk;
 import com.lpc.module2.mapper.tkMapper.UserMapperTk;
 import com.lpc.module2.model.Archive;
@@ -21,11 +21,11 @@ import java.util.List;
 public class UserServiceImpl extends MyService implements UserService {
 
     @Resource
-    private UserMapper userMapper;
+    private UserMapperImpl userMapper;
     @Resource
     private UserMapperTk userMapperTk;
     @Resource
-    private ArchiveMapper archiveMapper;
+    private ArchiveMapperImpl archiveMapper;
     @Resource
     private ArchiveMapperTk archiveMapperTk;
 
@@ -88,7 +88,6 @@ public class UserServiceImpl extends MyService implements UserService {
         return count;
     }
 
-    @Override
     public JqGridListForm findByPage(Pagination pagination) {
         int pageId = pagination.getPage() <= 0? 1:pagination.getPage();
         int pageSize = pagination.getRows() <= 0? 20: pagination.getRows();
