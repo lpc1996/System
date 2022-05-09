@@ -16,4 +16,49 @@
     <!--@mbg.generated generated on Wed May 04 14:42:33 CST 2022.-->
     id, `name`, `type`, code, `value`, `status`, update_time
   </sql>
+
+  <select id="selectUseLike" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from sys_dict
+    <where>
+      <if test="record.id != null">
+        and id like concat('%',#{record.id,jdbcType=BIGINT},'%')
+      </if>
+      <if test="record.name != null and record.name != ''">
+        and name like concat('%',#{record.name,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="record.type != null and record.type != ''">
+        and type like concat('%',#{record.type,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="record.code != null">
+        and code like concat('%',#{record.code,jdbcType=INTEGER},'%')
+      </if>
+      <if test="record.value != null and record.value != ''">
+        and value like concat('%',#{record.value,jdbcType=VARCHAR},'%')
+      </if>
+    </where>
+<!--    <if test="record."-->
+  </select>
+
+  <select id="selectCountUseLike" resultType="java.lang.Integer">
+    select count(id)
+    from sys_dict
+    <where>
+      <if test="record.id != null">
+        and id like concat('%',#{record.id,jdbcType=BIGINT},'%')
+      </if>
+      <if test="record.name != null and record.name != ''">
+        and name like concat('%',#{record.name,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="record.type != null and record.type != ''">
+        and type like concat('%',#{record.type,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="record.code != null">
+        and code like concat('%',#{record.code,jdbcType=INTEGER},'%')
+      </if>
+      <if test="record.value != null and record.value != ''">
+        and value like concat('%',#{record.value,jdbcType=VARCHAR},'%')
+      </if>
+    </where>
+  </select>
 </mapper>

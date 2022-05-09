@@ -34,9 +34,10 @@
     <thymeleaf.version>3.1.0.M1</thymeleaf.version>
     <cglib.version>3.3.0</cglib.version>
     <persistence.version>1.0.2</persistence.version>
-    <fastjson.version>1.2.80</fastjson.version>
+    <fastjson.version>2.0.2</fastjson.version>
     <jackson.version>2.13.2</jackson.version>
     <clickhouse.version>0.3.2-patch8</clickhouse.version>
+    <jwt.version>3.8.2</jwt.version>
   </properties>
 
   <dependencies>

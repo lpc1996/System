@@ -69,7 +69,7 @@
             <appender-ref ref="RollingFile"/>
         </logger>
 
-        <logger name="com.lpc.demo1" level="INFO" additivity="true" >
+        <logger name="com.lpc.module1" level="INFO" additivity="true" >
             <appender-ref ref="RollingFile"/>
         </logger>
         <logger name="log4j.logger.com.ibatis" level="DEBUG" additivity="true" >

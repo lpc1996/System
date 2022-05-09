@@ -35,7 +35,7 @@
         <property name="templateResolver" ref="viewResolve" />
     </bean>
 
-    <bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+    <bean id="thymeleafViewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
         <property name="templateEngine" ref="templateEngine" />
         <property name="characterEncoding" value="utf-8" />
     </bean>

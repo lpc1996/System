@@ -15,16 +15,14 @@
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
     <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
-    <result column="delete_at" jdbcType="TIMESTAMP" property="deleteAt" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated generated on Wed May 04 14:42:33 CST 2022.-->
-    id, pid, title, icon, href, target, sort, `status`, remark, create_at, update_at, 
-    delete_at
+    id, pid, title, icon, href, target, sort, `status`, remark, create_at, update_at
   </sql>
 
   <select id="selectByUserId" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List" />
+    select sm.id,sm.pid,sm.title,sm.icon,sm.href,sm.target,sm.sort,sm.status,sm.remark,sm.create_at,sm.update_at
     from sys_menu sm,role_menu rm,role_user ru
     where ru.user_id = #{userId,jdbcType=VARCHAR} and ru.role_id = rm.role_id and rm.menu_id = sm.id
   </select>

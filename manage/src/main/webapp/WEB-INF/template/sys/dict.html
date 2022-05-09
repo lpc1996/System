@@ -1,0 +1,336 @@
+<!--
+@package:
+@Author:旁观者
+@Date:2022/5/6-12:30
+@By:IntelliJ IDEA
+@FileName:dict.html
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>校园管理系统-字典管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/static/layui-v2.6.3/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/static/font-awesome-4.7.0/css/font-awesome.css}" media="all">
+    <link rel="stylesheet" th:href="@{/static/css/public.css}" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form id="search-form" class="layui-form layui-form-pane" lay-filter="search-form">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">字典名称</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="name" autocomplete="on" class="layui-input" placeholder="请输入字典名称" >
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">字典类型</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="type" autocomplete="on" class="layui-input" placeholder="请输入字典类型">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">字典码</label>
+                            <div class="layui-input-inline">
+                                <input type="number" name="code" autocomplete="on" class="layui-input" placeholder="请输入字典码">
+                            </div>
+                        </div>
+
+                        <div class="layui-inline">
+                            <label class="layui-form-label">字典值</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="value" autocomplete="on" class="layui-input" placeholder="请输入字典值">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
+                            <button type="button" id="refreshBtn" class="layui-btn layui-btn-primary" lay-filter="reset-btn"><i class="fa fa-recycle"></i> 重 置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> <i class="fa fa-plus"></i>添加 </button>
+                <button class="layui-btn layui-btn-sm layui-btn-sm data-refresh-btn" lay-event="refresh"> <i class="fa fa-refresh"></i>刷新 </button>
+            </div>
+        </script>
+
+        <table class="layui-hide" id="dictTable" lay-filter="dictTableFilter"></table>
+
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+        </script>
+
+        <div id="edit-dict-panel" style="display: none" class="layui-panel">
+            <form id="editDict" class="layui-form layui-form-pane" lay-filter="editDict" method="post">
+                <div class="layui-form-item" style="display: none">
+                    <label class="layui-form-label required">字典Id</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="id" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">字典名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" lay-verify="required" lay-reqtext="字典名不能为空"
+                               placeholder="请输入字典名" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">字典类型</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="type" lay-verify="required" lay-reqtext="字典类型不能为空"
+                               placeholder="请输入字典类型" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">字典码</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="code" lay-verify="required" lay-reqtext="字典码不能为空"
+                               placeholder="请输入字典码" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">字典值</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="value" lay-verify="required" lay-reqtext="字典值不能为空"
+                               placeholder="请输入字典值" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">字典状态</label>
+                    <div class="layui-input-block">
+                        <select name="status" class="layui-input">
+                            <option type="number" value="1">启用</option>
+                            <option type="number" value="0">禁用</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button id="saveBtn" class="layui-btn layui-btn-normal" type="submit" value="" lay-submit lay-filter="saveBtn">确认保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script th:src="@{/static/layui-v2.6.3/layui.js}" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+
+        table.render({
+            elem: '#dictTable',
+            url: '/school_manage/sys/dict/list',
+            method:"post",
+            contentType:"application/json",
+            toolbar: '#toolbarDemo',
+            limits: [10, 15, 20, 25, 50, 100],
+            limit: 15,
+            page: true,
+            skin: 'line',
+            request:{
+                pageName:'page',
+                limitName: 'nums',
+            },
+            response:{
+                statusName: 'code' //规定数据状态的字段名称，默认：code
+                ,statusCode: 200 //规定成功的状态码，默认：0
+                ,msgName: 'message' //规定状态信息的字段名称，默认：msg
+                ,countName: 'count' //规定数据总数的字段名称，默认：count
+                ,dataName: 'data' //规定数据列表的字段名称，默认：data
+            },
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '提示',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
+            cols: [
+                [
+                {type: "checkbox", width: 50},
+                {field: 'id', width: 80, title: 'id', sort: true},
+                {field: 'name', width: 110, title: '字典名称',sort:true},
+                {field: 'type', width: 120, title: '字典类型', sort: true},
+                {field: 'code', width: 100, title: '字典码',sort:true},
+                {field: 'value', title: '字典值', width: 100 ,sort:true},
+                {field: 'status', width: 100, title: '字典状态',templet:function (d){
+                    if(d.status == 1){
+                        return '<span class="layui-badge layui-bg-green">启用</span>';
+                    }else{
+                        return '<span class="layui-badge layui-bg-red">禁用</span>';
+                    }
+                }},
+                {field: 'updateTime', width: 200, title: '最后更新时间', sort: true,templet:function(d){
+                        return layui.util.toDateString(d.updateTime,"yyyy-MM-dd HH:mm:ss");
+                    }
+                },
+                {title: '操作', minWidth: 80, toolbar: '#currentTableBar', align: "center"}
+            ]
+            ]
+        });
+
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            let result = {};
+            if(data.field.name != ""){
+                result["name"] = data.field.name;
+            }
+            if(data.field.type != ""){
+                result["type"] = data.field.type;
+            }
+            if(data.field.code != ""){
+                result["code"] = data.field.code;
+            }
+            if(data.field.value != ""){
+                result["value"] = data.field.value;
+            }
+            //执行搜索重载
+            table.reload('dictTable', {
+                page: {
+                    curr: 1
+                },
+                where: {
+                    searchParams:result
+                }
+            });
+
+            return false;
+        });
+
+        $('#refreshBtn').click(function (){
+            $('#search-form')[0].reset();
+            form.render();
+        });
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(dictTableFilter)', function (obj) {
+            if (obj.event === 'add') {  // 监听添加操作
+                var index = layer.open({
+                    title: '添加字典',
+                    type: 1,
+                    shade: 0.2,
+                    maxmin:true,
+                    shadeClose: true,
+                    area: ['80%', '100%'],
+                    content: $('#edit-dict-panel'),
+                    success:function(){
+                        $('#editDict')[0].reset();
+                        form.render();
+                        $('#saveBtn').attr("value","add");
+                    },
+                });
+            } else if (obj.event === 'refresh') {  // 监听刷新操作
+                table.reload('dictTable',{
+                    page: {
+                        curr: $(".layui-laypage-em").next().html()
+                    }
+                });
+            }
+        });
+
+        //监听表单保存操作
+        form.on('submit(saveBtn)',function(data){
+            let field = data.field;
+            let result = {};
+            let postUrl = '/school_manage/sys/dict/';
+            if($('#saveBtn').attr('value') == 'edit'){
+                result['id'] = field.id;
+                postUrl = postUrl+'edit';
+            }else if($('#saveBtn').attr('value') == 'add'){
+                postUrl = postUrl+'add';
+            }
+            result['name']= field.name;
+            result['type'] = field.type;
+            result['code'] = field.code;
+            result['value'] = field.value;
+            result['status'] = field.status;
+            $.ajax({
+                url:postUrl,
+                type:'post',
+                headers : {'Content-Type' : 'application/json;charset=utf-8'}, //接口json格式
+                data:JSON.stringify(result),
+                success:function(data){
+                    if(data){
+                        layui.layer.msg("成功保存操作");
+                        table.reload('dictTable',{
+                            page: {
+                                curr: $(".layui-laypage-em").next().html()
+                            }
+                        });
+                    }else{
+                        layui.layer.msg("保存操作失败！");
+                    }
+                    layui.layer.closeAll('page');
+                },
+            });
+            return false;
+        });
+
+        //监听表格复选框选择
+        table.on('checkbox(currentTableFilter)', function (obj) {
+            // console.log(obj)
+        });
+
+        table.on('tool(currentTableFilter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+                var index = layer.open({
+                    title: '编辑字典',
+                    type: 1,
+                    shade: 0.2,
+                    maxmin:true,
+                    shadeClose: true,
+                    area: ['80%', '100%'],
+                    content: $('#edit-dict-panel'),
+                    success:function(){
+                        form.val('editDict',{
+                            'id':data.id,
+                            'name':data.name,
+                            'type':data.type,
+                            'code':data.code,
+                            'value':data.value,
+                            'select[status]':data.status
+                        });
+                        form.render();
+                        $('#saveBtn').attr('value','edit');
+                    }
+                });
+                return false;
+            } else if (obj.event === 'delete') {
+                layer.confirm('真的删除行么', function (index) {
+                    obj.del();
+                    $.ajax({
+                        url:'/school_manage/sys/dict/del',
+                        type:'post',
+                        headers : {'Content-Type' : 'application/json;charset=utf-8'}, //接口json格式
+                        data:JSON.stringify(data)
+                    });
+                    layer.close(index);
+                    table.reload();
+                });
+                return false;
+            }
+        });
+
+    });
+
+</script>
+</body>
+</html>

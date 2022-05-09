@@ -1,11 +1,10 @@
 package com.lpc.module1.model;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-
 
 /**
  * @package:com.lpc.module1.model
@@ -24,13 +23,13 @@ public class SysMenu extends MyModel {
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "JDBC")
-    private Integer id;
+    private Long id;
 
     /**
      * 父ID
      */
     @Column(name = "pid")
-    private Integer pid;
+    private Long pid;
 
     /**
      * 名称
@@ -86,9 +85,5 @@ public class SysMenu extends MyModel {
     @Column(name = "update_at")
     private Date updateAt;
 
-    /**
-     * 删除时间
-     */
-    @Column(name = "delete_at")
-    private Date deleteAt;
+
 }

@@ -54,4 +54,30 @@
     set `name`=#{updatedName,jdbcType=VARCHAR}
     where id=#{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectWithLike" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from user
+    <where>
+      <if test="record.id != null and record.id != ''">
+          id like concat('%',#{record.id},'%')
+      </if>
+      <if test="record.name != null and record.name != ''">
+          and name like concat('%',#{record.name,jdbcType=VARCHAR},'%')
+      </if>
+    </where>
+  </select>
+
+  <select id="selectCountWithLike" resultType="int">
+    select count(id)
+    from user
+    <where>
+      <if test="record.id != null and record.id != ''">
+        id like concat('%',#{record.id},'%')
+      </if>
+      <if test="record.name != null and record.name != ''">
+        and name like concat('%',#{record.name,jdbcType=VARCHAR},'%')
+      </if>
+    </where>
+  </select>
 </mapper>

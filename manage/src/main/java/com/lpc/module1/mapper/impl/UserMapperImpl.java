@@ -1,7 +1,10 @@
 package com.lpc.module1.mapper.impl;
 
 import com.lpc.module1.mapper.UserMapper;
+import com.lpc.module1.model.User;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @package:com.lpc.module1.mapper.impl
@@ -25,5 +28,21 @@ public class UserMapperImpl extends MyMapperImpl<UserMapper> implements UserMapp
     @Override
     public int updatePassByIdAndOldPass(String id, String oldPass, String newPass) {
         return getMapper(UserMapper.class).updatePassByIdAndOldPass(id,oldPass,newPass);
+    }
+
+    @Override
+    public List<User> selectWithLike(User record) {
+        return getMapper(UserMapper.class).selectWithLike(record);
+    }
+
+    /**
+     * 获取like模糊查询的总数
+     *
+     * @param record
+     * @return
+     */
+    @Override
+    public int selectCountWithLike(User record) {
+        return getMapper(UserMapper.class).selectCountWithLike(record);
     }
 }
